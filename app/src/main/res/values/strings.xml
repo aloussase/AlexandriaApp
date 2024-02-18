@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Alexandria</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="book_downloader_service_description">Search books from the internet</string>
+    <string name="file_conversion_service_description">Convert files to different formats</string>
+    <string name="download_receiver_description">Listen to download completions</string>
+    <string name="loading_results">Cargando resultados…</string>
+    <string name="descargar">Descargar</string>
+    <string name="cover">Cover</string>
+    <string name="pdf">PDF</string>
+    <string name="epub">EPUB</string>
+    <string name="azw3">AZW3</string>
+    <string name="home_greeting">
+        ¡Bienvenido/a! Utiliza la barra de búsqueda para empezar a buscar libros.
+    </string>
+    <string name="server_error">
+        Hubo un error al contactar el servidor. Por favor, intentálo de nuevo luego.
+    </string>
+</resources>
