@@ -1,6 +1,7 @@
 package io.github.aloussase.booksdownloader.services
 
 import android.content.Intent
+import android.net.Uri
 import android.os.IBinder
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -117,7 +118,16 @@ class BookSearchService : BaseApplicationService() {
             ?: return null
 
         val mirrorsDoc = Jsoup.connect(mirrorsPageUrl).get()
-        val downloadUrl = mirrorsDoc.selectFirst("h2 > a[href]")?.attr("href") ?: return null
+
+        // SSL Certificates by libgen seem to be self-signed or something
+        // Another workaround would be to configure network to trust their certificates
+        val downloadUrl = Uri.parse(
+            mirrorsDoc
+                .selectFirst("h2 > a[href]")
+                ?.attr("href")
+                ?.replace("https", "http")
+        ) ?: return null
+
         val imageUrl = mirrorsDoc.selectFirst("img[src]")?.attr("src") ?: return null
 
         return Book(

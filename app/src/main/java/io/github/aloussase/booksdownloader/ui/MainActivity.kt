@@ -4,21 +4,31 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.aloussase.booksdownloader.R
 import io.github.aloussase.booksdownloader.databinding.ActivityMainBinding
 import io.github.aloussase.booksdownloader.services.BookSearchService
+import io.github.aloussase.booksdownloader.viewmodels.SnackbarViewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
+
+    private val snackbarViewModel by viewModels<SnackbarViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +38,14 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        navController = navHost.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
+
         setupActionBarWithNavController(navController, appBarConfiguration)
+        NavigationUI.setupWithNavController(binding.navigation, navController)
+
+        snackbarViewModel.isShowing.observe(this, ::showSnackbar)
     }
 
     private fun startSearchService(query: String) {
@@ -39,6 +54,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         startService(intent)
+    }
+
+    private fun showSnackbar(show: Boolean) {
+        if (show) {
+            val snackbar = Snackbar.make(
+                binding.root,
+                snackbarViewModel.message.value!!,
+                Snackbar.LENGTH_LONG
+            )
+
+            snackbar.addCallback(object : Snackbar.Callback() {
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                    super.onDismissed(transientBottomBar, event)
+                    snackbarViewModel.hideSnackbar()
+                }
+            })
+
+            snackbar.show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -69,10 +103,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            R.id.action_search -> super.onOptionsItemSelected(item)
-            else -> super.onOptionsItemSelected(item)
-        }
+        super.onOptionsItemSelected(item)
+        return item.onNavDestinationSelected(findNavController(R.id.nav_host))
     }
 }

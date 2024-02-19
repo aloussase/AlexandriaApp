@@ -39,7 +39,3 @@
 -keep class android.widget.TextView
 -keep class androidx.appcompat.widget.AppCompatButton
 -keep class com.bumptech.glide.load.resource.bitmap.Downsampler
--keep class java.io.*
--keep class java.util.*
--keep class java.util.function.*
--keep class java.util.function.Function
