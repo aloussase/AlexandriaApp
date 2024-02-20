@@ -56,6 +56,9 @@ class ConvertViewModel @Inject constructor(
     val state: LiveData<State> get() = _state
 
 
+    private val _bookForConversion = MutableLiveData<Book>()
+    val bookForConversion: LiveData<Book> get() = _bookForConversion
+
     fun onEvent(evt: Event) {
         when (evt) {
             is Event.OnFileUploaded -> onFileUploaded(evt.uri)
@@ -73,15 +76,11 @@ class ConvertViewModel @Inject constructor(
                 val extension = filename.split('.').last()
                 val fromFormat = BookFormat.parse(extension)
 
-                Log.d(TAG, "Converting $title from $fromFormat to ${state.conversionFormat}")
-
                 val result = conversions.convert(
                     fromFormat,
                     state.conversionFormat,
                     state.fileContents ?: return@launch
                 )
-
-                Log.d(TAG, "Conversion url: ${result.downloadUrl}")
 
                 val book = Book(
                     title = title,
@@ -92,7 +91,7 @@ class ConvertViewModel @Inject constructor(
                     imageUrl = ""
                 )
 
-                downloads.download(book)
+                _bookForConversion.value = book
             }
         }
     }

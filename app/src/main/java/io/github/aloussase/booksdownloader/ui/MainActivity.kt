@@ -18,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.aloussase.booksdownloader.R
 import io.github.aloussase.booksdownloader.databinding.ActivityMainBinding
+import io.github.aloussase.booksdownloader.receivers.DownloadManagerReceiver
 import io.github.aloussase.booksdownloader.services.BookSearchService
 import io.github.aloussase.booksdownloader.viewmodels.SnackbarViewModel
 
@@ -46,6 +47,10 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navigation, navController)
 
         snackbarViewModel.isShowing.observe(this, ::showSnackbar)
+
+        DownloadManagerReceiver.notify.observe(this) {
+            snackbarViewModel.showSnackbar("Descarga completada: ${it.bookTitle}")
+        }
     }
 
     private fun startSearchService(query: String) {

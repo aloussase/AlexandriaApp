@@ -2,7 +2,7 @@ package io.github.aloussase.booksdownloader.repositories
 
 import android.app.DownloadManager
 import android.content.Context
-import android.os.Environment
+import android.net.Uri
 import io.github.aloussase.booksdownloader.data.Book
 import javax.inject.Inject
 
@@ -14,14 +14,11 @@ class BookDownloadsRepositoryImpl @Inject constructor(
         context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     }
 
-    override suspend fun download(book: Book) {
+    override suspend fun download(book: Book, toUri: Uri) {
         val request = DownloadManager.Request(book.downloadUrl).apply {
             setTitle("Downloading ${book.title}")
             setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            setDestinationInExternalPublicDir(
-                Environment.DIRECTORY_DOWNLOADS,
-                "${book.title}.${book.extension}"
-            )
+            setDestinationUri(toUri)
         }
 
         downloadManager.enqueue(request)

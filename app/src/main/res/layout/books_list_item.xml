@@ -4,14 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="26dp">
+    android:paddingStart="26dp"
+    android:paddingTop="18dp"
+    android:paddingEnd="26dp"
+    android:paddingBottom="18dp">
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="400dp"
-        android:textSize="16sp"
+        android:maxWidth="@dimen/book_title_max_size"
+        android:textStyle="bold"
+        android:textSize="@dimen/book_title_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="The way of kings" />
@@ -20,16 +24,17 @@
         android:id="@+id/tvAuthors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/book_author_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/btnDownload"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
         tools:text="Brandon Sanderson" />
 
     <android.widget.Button
         android:id="@+id/btnDownload"
-        android:layout_marginTop="16dp"
-        android:text="@string/pdf"
         style="@style/DownloadButtonStyle"
         android:background="@drawable/pdf_download_button"
+        android:text="@string/pdf"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAuthors" />

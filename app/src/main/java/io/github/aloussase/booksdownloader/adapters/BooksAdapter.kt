@@ -2,7 +2,6 @@ package io.github.aloussase.booksdownloader.adapters
 
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.LayoutInflater
@@ -77,7 +76,6 @@ class BooksAdapter : RecyclerView.Adapter<BooksAdapter.BooksViewHolder>() {
 
             val tvTitle = findViewById<TextView>(R.id.tvTitle)
             tvTitle.text = book.title
-            tvTitle.setTypeface(tvTitle.typeface, Typeface.BOLD)
 
             val tvAuthors = findViewById<TextView>(R.id.tvAuthors)
             tvAuthors.text = book.authors.joinToString(", ")

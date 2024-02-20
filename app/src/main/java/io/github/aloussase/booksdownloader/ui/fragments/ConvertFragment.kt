@@ -3,10 +3,10 @@ package io.github.aloussase.booksdownloader.ui.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.aloussase.booksdownloader.R
@@ -15,10 +15,9 @@ import io.github.aloussase.booksdownloader.data.parse
 import io.github.aloussase.booksdownloader.databinding.FragmentConvertBinding
 import io.github.aloussase.booksdownloader.ui.MainActivity
 import io.github.aloussase.booksdownloader.viewmodels.ConvertViewModel
-import io.github.aloussase.booksdownloader.viewmodels.SnackbarViewModel
 
 @AndroidEntryPoint
-class ConvertFragment : Fragment(R.layout.fragment_convert) {
+class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
     companion object {
         const val TAG = "ConvertFragment"
         const val PICK_FILE = 2
@@ -27,8 +26,6 @@ class ConvertFragment : Fragment(R.layout.fragment_convert) {
     private lateinit var binding: FragmentConvertBinding
 
     private val convertViewModel: ConvertViewModel by activityViewModels()
-
-    private val snackbarViewModel: SnackbarViewModel by activityViewModels()
 
     private var uploadedFileName: String? = null
 
@@ -60,6 +57,11 @@ class ConvertFragment : Fragment(R.layout.fragment_convert) {
             it.setIcon(R.drawable.ic_toolbar_book)
         }
 
+        convertViewModel.bookForConversion.observe(viewLifecycleOwner) { book ->
+            // TODO: Download book from API
+            Log.d(TAG, "Book: $book")
+        }
+
         return binding.root
     }
 
@@ -74,7 +76,7 @@ class ConvertFragment : Fragment(R.layout.fragment_convert) {
         newState.fileDisplayName?.let { filename ->
             if (filename != uploadedFileName) {
                 uploadedFileName = filename
-                snackbarViewModel.showSnackbar("Archivo cargado: $filename")
+                snackBarViewModel.showSnackbar("Archivo cargado: $filename")
             }
         }
     }
@@ -85,7 +87,7 @@ class ConvertFragment : Fragment(R.layout.fragment_convert) {
         }
 
         if (fromFormat == convertViewModel.state.value?.conversionFormat) {
-            snackbarViewModel.showSnackbar("El archivo ya está en el formato seleccionado")
+            snackBarViewModel.showSnackbar("El archivo ya está en el formato seleccionado")
             return
         }
 

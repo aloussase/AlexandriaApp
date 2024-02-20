@@ -1,3 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="book_title_text_size">14sp</dimen>
+    <dimen name="book_title_max_size">250dp</dimen>
+    <dimen name="book_author_text_size">12sp</dimen>
 </resources>

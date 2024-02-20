@@ -18,6 +18,7 @@ import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
+import java.net.SocketTimeoutException
 import java.net.URLEncoder
 
 class BookSearchService : BaseApplicationService() {
@@ -73,12 +74,20 @@ class BookSearchService : BaseApplicationService() {
         scope.launch {
             try {
                 startSearch(searchQuery)
-            } catch (ex: HttpStatusException) {
-                withContext(Dispatchers.Main) {
-                    Log.e(TAG, "There was an error fetching: ${ex.url}")
-                    _state.value = State.HadError
-                    stopSelf()
+            } catch (ex: Exception) {
+                when (ex) {
+                    is SocketTimeoutException,
+                    is HttpStatusException -> {
+                        withContext(Dispatchers.Main) {
+                            Log.e(TAG, "There was an error fetching the search results")
+                            _state.value = State.HadError
+                            stopSelf()
+                        }
+                    }
+
+                    else -> throw ex
                 }
+
             }
         }
 
