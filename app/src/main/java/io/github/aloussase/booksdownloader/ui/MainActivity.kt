@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -21,6 +22,7 @@ import io.github.aloussase.booksdownloader.databinding.ActivityMainBinding
 import io.github.aloussase.booksdownloader.receivers.DownloadManagerReceiver
 import io.github.aloussase.booksdownloader.services.BookSearchService
 import io.github.aloussase.booksdownloader.viewmodels.SnackbarViewModel
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -48,8 +50,10 @@ class MainActivity : AppCompatActivity() {
 
         snackbarViewModel.isShowing.observe(this, ::showSnackbar)
 
-        DownloadManagerReceiver.notify.observe(this) {
-            snackbarViewModel.showSnackbar("Descarga completada: ${it.bookTitle}")
+        lifecycleScope.launch {
+            DownloadManagerReceiver.isDownloadCompleted.collect {
+                snackbarViewModel.showSnackbar("Descarga completada: ${it.bookTitle}")
+            }
         }
     }
 

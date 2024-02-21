@@ -5,16 +5,23 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import io.github.aloussase.booksdownloader.data.DownloadResult
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 
 class DownloadManagerReceiver : BroadcastReceiver() {
     val TAG = "DownloadManagerReceiver"
 
+    val job = SupervisorJob()
+    val scope = CoroutineScope(job + Dispatchers.Main)
+
     companion object {
-        val _notify = MutableLiveData<DownloadResult>()
-        val notify: LiveData<DownloadResult> get() = _notify
+        private val _isDownloadCompleted = Channel<DownloadResult>()
+        val isDownloadCompleted = _isDownloadCompleted.receiveAsFlow()
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -46,10 +53,14 @@ class DownloadManagerReceiver : BroadcastReceiver() {
                     .drop(1)
                     .joinToString(" ")
 
-                _notify.value = DownloadResult(
-                    bookTitle = bookTitle,
-                    destinationUri = downloadedUri,
-                )
+                scope.launch {
+                    _isDownloadCompleted.send(
+                        DownloadResult(
+                            bookTitle = bookTitle,
+                            destinationUri = downloadedUri,
+                        )
+                    )
+                }
             }
         }
 
