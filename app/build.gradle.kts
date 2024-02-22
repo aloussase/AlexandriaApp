@@ -30,6 +30,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -67,6 +68,15 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.16.0")
 
     implementation("pub.devrel:easypermissions:3.0.0")
+
+    implementation("com.squareup.okhttp3:okhttp") {
+        version {
+            strictly("3.12.12")
+        }
+    }
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
 }
 
 kapt {

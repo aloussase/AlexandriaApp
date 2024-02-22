@@ -28,4 +28,8 @@
     <string name="conversion_format">¿A qué formato quieres convertirlo?</string>
     <string name="convert">Convertir</string>
     <string name="filtros">Filtrar por</string>
+    <string name="conversion_error">
+        Hubo un error al convertir el archivo. Por favor, intentálo de nuevo más tarde.
+    </string>
+    <string name="archivo_cargado">Cargado: %s</string>
 </resources>

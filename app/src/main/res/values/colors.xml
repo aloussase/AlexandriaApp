@@ -8,4 +8,5 @@
     <color name="lime">#FFD5F0C1</color>
     <color name="dark_green">#FF092635</color>
     <color name="gray">#FFB5B5B5</color>
+    <color name="light_gray">#FFD3D3D3</color>
 </resources>

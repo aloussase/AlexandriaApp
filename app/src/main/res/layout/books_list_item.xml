@@ -14,8 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="@dimen/book_title_max_size"
-        android:textStyle="bold"
         android:textSize="@dimen/book_title_text_size"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="The way of kings" />
@@ -38,6 +38,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAuthors" />
+
+    <TextView
+        android:id="@+id/tvSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDownload"
+        app:layout_constraintStart_toEndOf="@+id/btnDownload"
+        app:layout_constraintTop_toTopOf="@+id/btnDownload"
+        tools:text="12 KB" />
 
     <ImageView
         android:id="@+id/ivBookCover"

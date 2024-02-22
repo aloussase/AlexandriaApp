@@ -122,6 +122,11 @@ class BookSearchService : BaseApplicationService() {
             .map(TextNode::text)
             .firstOrNull { it in acceptableBookFormats } ?: return null
 
+        val size = row.select("td:nth-child(8)")
+            .textNodes()
+            .map(TextNode::text)
+            .firstOrNull() ?: return null
+
         val mirrorsPageUrl = row
             .selectFirst("td:nth-child(10) > a[href]")?.attr("href")
             ?: return null
@@ -145,7 +150,8 @@ class BookSearchService : BaseApplicationService() {
             title,
             extension,
             downloadUrl,
-            imageUrl
+            imageUrl,
+            size
         )
     }
 

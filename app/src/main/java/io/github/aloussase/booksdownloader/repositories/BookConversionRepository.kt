@@ -10,6 +10,7 @@ interface BookConversionRepository {
     suspend fun convert(
         from: BookFormat,
         to: BookFormat,
+        filename: String,
         bytes: ByteArray
     ): ConversionResult
 }

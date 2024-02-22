@@ -12,9 +12,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.aloussase.booksdownloader.data.Book
 import io.github.aloussase.booksdownloader.data.BookFormat
+import io.github.aloussase.booksdownloader.data.ConversionResult
+import io.github.aloussase.booksdownloader.data.empty
 import io.github.aloussase.booksdownloader.data.parse
 import io.github.aloussase.booksdownloader.repositories.BookConversionRepository
-import io.github.aloussase.booksdownloader.repositories.BookDownloadsRepository
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +25,6 @@ import javax.inject.Inject
 class ConvertViewModel @Inject constructor(
     @ApplicationContext context: Context,
     val conversions: BookConversionRepository,
-    val downloads: BookDownloadsRepository
 ) : ViewModel() {
 
     sealed class Event {
@@ -55,9 +57,11 @@ class ConvertViewModel @Inject constructor(
 
     val state: LiveData<State> get() = _state
 
+    private val _convertedBook = Channel<Book>()
+    val convertedBook = _convertedBook.receiveAsFlow()
 
-    private val _bookForConversion = MutableLiveData<Book>()
-    val bookForConversion: LiveData<Book> get() = _bookForConversion
+    private val _conversionError = Channel<Boolean>()
+    val conversionError = _conversionError.receiveAsFlow()
 
     fun onEvent(evt: Event) {
         when (evt) {
@@ -68,6 +72,8 @@ class ConvertViewModel @Inject constructor(
     }
 
     private fun onConvertBook() {
+        Log.d(TAG, "Converting book: ${_state.value?.fileDisplayName}")
+
         val state = _state.value
         if (state != null) {
             viewModelScope.launch {
@@ -79,19 +85,25 @@ class ConvertViewModel @Inject constructor(
                 val result = conversions.convert(
                     fromFormat,
                     state.conversionFormat,
+                    filename,
                     state.fileContents ?: return@launch
                 )
 
-                val book = Book(
-                    title = title,
-                    extension = extension,
-                    downloadUrl = result.downloadUrl,
-                    authors = emptyList(),
-                    id = 0,
-                    imageUrl = ""
-                )
+                when (result) {
+                    is ConversionResult.Success -> {
+                        val book = Book.empty().copy(
+                            title = title,
+                            extension = state.conversionFormat.name.lowercase(),
+                            downloadUrl = result.downloadUrl
+                        )
 
-                _bookForConversion.value = book
+                        _convertedBook.send(book)
+                    }
+
+                    is ConversionResult.Error -> {
+                        _conversionError.send(true)
+                    }
+                }
             }
         }
     }

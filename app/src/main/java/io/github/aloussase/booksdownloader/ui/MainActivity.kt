@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             val snackbar = Snackbar.make(
                 binding.root,
                 snackbarViewModel.message.value!!,
-                Snackbar.LENGTH_LONG
+                Snackbar.LENGTH_SHORT
             )
 
             snackbar.addCallback(object : Snackbar.Callback() {

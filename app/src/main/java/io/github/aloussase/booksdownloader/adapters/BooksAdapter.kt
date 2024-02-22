@@ -80,6 +80,9 @@ class BooksAdapter : RecyclerView.Adapter<BooksAdapter.BooksViewHolder>() {
             val tvAuthors = findViewById<TextView>(R.id.tvAuthors)
             tvAuthors.text = book.authors.joinToString(", ")
 
+            val tvSize = findViewById<TextView>(R.id.tvSize)
+            tvSize.text = book.size
+
             val ivCover = findViewById<ImageView>(R.id.ivBookCover)
             GlideApp
                 .with(this)

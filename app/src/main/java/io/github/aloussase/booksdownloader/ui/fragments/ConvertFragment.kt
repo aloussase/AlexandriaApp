@@ -3,11 +3,11 @@ package io.github.aloussase.booksdownloader.ui.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.aloussase.booksdownloader.R
 import io.github.aloussase.booksdownloader.data.BookFormat
@@ -15,6 +15,7 @@ import io.github.aloussase.booksdownloader.data.parse
 import io.github.aloussase.booksdownloader.databinding.FragmentConvertBinding
 import io.github.aloussase.booksdownloader.ui.MainActivity
 import io.github.aloussase.booksdownloader.viewmodels.ConvertViewModel
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
@@ -57,9 +58,20 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
             it.setIcon(R.drawable.ic_toolbar_book)
         }
 
-        convertViewModel.bookForConversion.observe(viewLifecycleOwner) { book ->
-            // TODO: Download book from API
-            Log.d(TAG, "Book: $book")
+        lifecycleScope.launch {
+            convertViewModel.convertedBook.collect { book ->
+                snackBarViewModel.showSnackbar("Conversión completada. Iniciando descarga.")
+                setBookForDownload(book)
+                downloadBook()
+            }
+        }
+
+        lifecycleScope.launch {
+            convertViewModel.conversionError.collect { hadError ->
+                if (hadError) {
+                    snackBarViewModel.showSnackbar(getString(R.string.conversion_error))
+                }
+            }
         }
 
         return binding.root
@@ -76,6 +88,7 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
         newState.fileDisplayName?.let { filename ->
             if (filename != uploadedFileName) {
                 uploadedFileName = filename
+                binding.tvFileName.text = getString(R.string.archivo_cargado, filename)
                 snackBarViewModel.showSnackbar("Archivo cargado: $filename")
             }
         }
@@ -91,6 +104,7 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
             return
         }
 
+        snackBarViewModel.showSnackbar("Iniciando conversión")
         convertViewModel.onEvent(ConvertViewModel.Event.OnConvertBook)
     }
 
