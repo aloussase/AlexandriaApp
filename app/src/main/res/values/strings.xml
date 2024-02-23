@@ -32,4 +32,8 @@
         Hubo un error al convertir el archivo. Por favor, intentálo de nuevo más tarde.
     </string>
     <string name="archivo_cargado">Cargado: %s</string>
+    <string name="logo">logo</string>
+    <string name="about">Acerca</string>
+    <string name="mas">Más</string>
+    <string name="version">Version 0.1.0</string>
 </resources>

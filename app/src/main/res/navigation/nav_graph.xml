@@ -7,17 +7,29 @@
     <fragment
         android:id="@+id/navSearch"
         android:name="io.github.aloussase.booksdownloader.ui.fragments.BookSearchFragment"
-        android:label="@string/search_books_toolbar_title">
-        <action
-            android:id="@+id/action_navSearch_to_navConvert"
-            app:destination="@id/navConvert" />
-    </fragment>
+        android:label="@string/search_books_toolbar_title" />
     <fragment
         android:id="@+id/navConvert"
         android:name="io.github.aloussase.booksdownloader.ui.fragments.ConvertFragment"
-        android:label="@string/convert_books_toolbar_title">
-        <action
-            android:id="@+id/action_navConvert_to_navSearch"
-            app:destination="@id/navSearch" />
-    </fragment>
+        android:label="@string/convert_books_toolbar_title" />
+    <fragment
+        android:id="@+id/navMore"
+        android:name="io.github.aloussase.booksdownloader.ui.fragments.MoreFragment"
+        android:label="" />
+    <action
+        android:id="@+id/action_global_navSearch"
+        app:destination="@id/navSearch" />
+    <action
+        android:id="@+id/action_global_navConvert"
+        app:destination="@id/navConvert" />
+    <action
+        android:id="@+id/action_global_moreFragment"
+        app:destination="@id/navMore" />
+    <fragment
+        android:id="@+id/navAbout"
+        android:name="io.github.aloussase.booksdownloader.ui.fragments.AboutFragment"
+        android:label="@string/about" />
+    <action
+        android:id="@+id/action_global_aboutFragment"
+        app:destination="@id/navAbout" />
 </navigation>

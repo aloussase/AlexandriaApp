@@ -13,7 +13,6 @@ import io.github.aloussase.booksdownloader.adapters.BooksAdapter
 import io.github.aloussase.booksdownloader.data.BookFormat
 import io.github.aloussase.booksdownloader.databinding.FragmentHomeBinding
 import io.github.aloussase.booksdownloader.services.BookSearchService
-import io.github.aloussase.booksdownloader.ui.MainActivity
 import io.github.aloussase.booksdownloader.viewmodels.BookSearchViewModel
 
 @AndroidEntryPoint
@@ -34,11 +33,6 @@ class BookSearchFragment : BaseApplicationFragment(R.layout.fragment_home) {
         super.onCreateView(inflater, container, savedInstanceState)
 
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
-
-        (activity as MainActivity).supportActionBar?.let {
-            it.title = getString(R.string.search_books_toolbar_title)
-            it.setIcon(R.drawable.ic_toolbar_book)
-        }
 
         setupRecyclerView()
         setupBookSearchObserver()

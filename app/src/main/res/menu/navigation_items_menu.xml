@@ -9,4 +9,9 @@
         android:id="@+id/navConvert"
         android:icon="@drawable/ic_convert"
         android:title="@string/convert_menu_item" />
+
+    <item
+        android:id="@+id/navMore"
+        android:icon="@drawable/ic_ellipsis"
+        android:title="@string/mas" />
 </menu>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Alexandria</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="book_downloader_service_description">Search books from the internet</string>
+    <string name="file_conversion_service_description">Convert files to different formats</string>
+    <string name="download_receiver_description">Listen to download completions</string>
+    <string name="loading_results">Loading results…</string>
+    <string name="descargar">Download</string>
+    <string name="cover">Cover</string>
+    <string name="pdf">PDF</string>
+    <string name="epub">EPUB</string>
+    <string name="azw3">AZW3</string>
+    <string name="home_greeting">Wow such empty!\n\nUse the search bar to start searching books.</string>
+    <string name="server_error">There was an error contacting the server. Please try again later.</string>
+    <string name="search_menu_item">Search</string>
+    <string name="convert_menu_item">Convert</string>
+    <string name="search_books_toolbar_title">Search boks</string>
+    <string name="convert_books_toolbar_title">Convert books</string>
+    <string name="choose_a_file">Choose a file</string>
+    <string name="choose_a_file_to_convert">Choose a file to convert</string>
+    <string name="mobi">MOBI</string>
+    <string name="conversion_format">Convert to which format?</string>
+    <string name="convert">Convert</string>
+    <string name="filtros">Filter by</string>
+    <string name="conversion_error">There was an error while converting the file. Please, try again later.</string>
+    <string name="archivo_cargado">Loaded: %s</string>
+    <string name="logo">logo</string>
+    <string name="about">About</string>
+    <string name="mas">More</string>
+</resources>

@@ -13,7 +13,6 @@ import io.github.aloussase.booksdownloader.R
 import io.github.aloussase.booksdownloader.data.BookFormat
 import io.github.aloussase.booksdownloader.data.parse
 import io.github.aloussase.booksdownloader.databinding.FragmentConvertBinding
-import io.github.aloussase.booksdownloader.ui.MainActivity
 import io.github.aloussase.booksdownloader.viewmodels.ConvertViewModel
 import kotlinx.coroutines.launch
 
@@ -52,11 +51,6 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
         }
 
         convertViewModel.state.observe(viewLifecycleOwner, ::onConvertViewModelStateChanged)
-
-        (activity as MainActivity).supportActionBar?.let {
-            it.title = getString(R.string.convert_books_toolbar_title)
-            it.setIcon(R.drawable.ic_toolbar_book)
-        }
 
         lifecycleScope.launch {
             convertViewModel.convertedBook.collect { book ->

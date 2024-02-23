@@ -14,6 +14,23 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="MoreButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:drawablePadding">8dp</item>
+    </style>
+
+    <style name="AboutButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
     <style name="DownloadButtonStyle" parent="Widget.AppCompat.Button.Small">
         <item name="android:drawableLeft">@drawable/ic_download</item>
         <item name="android:drawablePadding">0dp</item>
