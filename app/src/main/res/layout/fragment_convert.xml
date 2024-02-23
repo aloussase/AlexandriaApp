@@ -19,12 +19,10 @@
         app:layout_constraintVertical_bias="0.5"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <android.widget.Button
+    <Button
         android:id="@+id/btnChooseFile"
         style="@style/AppButtonStyle"
-        android:background="@drawable/button_outline_primary"
         android:text="@string/choose_a_file"
-        android:textColor="@color/royal_blue"
         app:layout_constraintBottom_toTopOf="@+id/tvConversionFormat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,13 +90,11 @@
 
     </RadioGroup>
 
-    <android.widget.Button
+    <Button
         android:id="@+id/btnConvert"
         style="@style/AppButtonStyle"
-        android:background="@drawable/button_outline_success"
         android:enabled="false"
         android:text="@string/convert"
-        android:textColor="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

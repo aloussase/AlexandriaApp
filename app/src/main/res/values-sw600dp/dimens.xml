@@ -3,4 +3,5 @@
     <dimen name="book_title_text_size">16sp</dimen>
     <dimen name="book_title_max_size">350dp</dimen>
     <dimen name="book_author_text_size">14sp</dimen>
+    <dimen name="book_toolbar_icon_padding">8dp</dimen>
 </resources>

@@ -3,9 +3,9 @@
     <color name="black">#FF010409</color>
     <color name="white">#FFFAFAFA</color>
     <color name="gray">#FF333333</color>
-    <color name="disabled_bg">#FFAAAAAA</color>
-    <color name="disabled_fg">#FFFAFAFA</color>
+    <color name="disabled_bg">@color/gray</color>
     <color name="dark_gray">#FF222222</color>
+    <color name="disabled_fg">@color/dark_gray</color>
     <color name="blue">#FF4078c0</color>
     <color name="royal_blue">#FF4169E1</color>
     <color name="sky_blue">#FFE9F6FF</color>

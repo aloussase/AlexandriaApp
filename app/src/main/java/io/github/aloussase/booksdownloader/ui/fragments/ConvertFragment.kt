@@ -80,9 +80,6 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
     private fun onConvertViewModelStateChanged(newState: ConvertViewModel.State) {
         binding.btnConvert.isEnabled = newState.isFileUploaded
 
-        val color = if (newState.isFileUploaded) R.color.green else R.color.gray
-        binding.btnConvert.setTextColor(resources.getColor(color))
-
         setConversionFormat(newState.conversionFormat)
 
         newState.fileDisplayName?.let { filename ->

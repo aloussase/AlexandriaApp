@@ -23,7 +23,7 @@ abstract class BaseApplicationService : Service() {
             this,
             0,
             Intent(this, T::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
     }
 

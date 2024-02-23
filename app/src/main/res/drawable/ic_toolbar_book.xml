@@ -2,6 +2,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:drawable="@drawable/ic_book"
-        android:left="8dp"
-        android:right="8dp" />
+        android:left="@dimen/book_toolbar_icon_padding"
+        android:right="@dimen/book_toolbar_icon_padding" />
 </layer-list>

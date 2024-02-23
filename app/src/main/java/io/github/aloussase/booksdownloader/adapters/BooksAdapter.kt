@@ -3,7 +3,6 @@ package io.github.aloussase.booksdownloader.adapters
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +14,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import io.github.aloussase.booksdownloader.GlideApp
-import io.github.aloussase.booksdownloader.GlideRequest
 import io.github.aloussase.booksdownloader.R
 import io.github.aloussase.booksdownloader.data.Book
 import io.github.aloussase.booksdownloader.data.BookFormat
@@ -87,7 +84,6 @@ class BooksAdapter : RecyclerView.Adapter<BooksAdapter.BooksViewHolder>() {
             GlideApp
                 .with(this)
                 .load(book.cover())
-                .withPlaceholder(context)
                 .into(ivCover)
         }
     }
@@ -107,19 +103,4 @@ private fun Book.getDrawable(resources: Resources, context: Context): Drawable {
         id,
         context.theme
     )!!
-}
-
-private fun <T> GlideRequest<T>.withPlaceholder(context: Context): GlideRequest<T> {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val circularProgressDrawable = CircularProgressDrawable(context).apply {
-            arrowEnabled = true
-            centerRadius = 30f
-        }
-
-        circularProgressDrawable.start()
-
-        placeholder(circularProgressDrawable)
-    } else {
-        this
-    }
 }

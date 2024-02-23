@@ -7,17 +7,17 @@
     <fragment
         android:id="@+id/navSearch"
         android:name="io.github.aloussase.booksdownloader.ui.fragments.BookSearchFragment"
-        android:label="HomeFragment">
+        android:label="@string/search_books_toolbar_title">
         <action
-            android:id="@+id/action_homeFragment_to_convertFragment"
-            app:destination="@+id/navSearch" />
+            android:id="@+id/action_navSearch_to_navConvert"
+            app:destination="@id/navConvert" />
     </fragment>
     <fragment
         android:id="@+id/navConvert"
         android:name="io.github.aloussase.booksdownloader.ui.fragments.ConvertFragment"
-        android:label="ConvertFragment">
+        android:label="@string/convert_books_toolbar_title">
         <action
-            android:id="@+id/action_convertFragment_to_homeFragment"
-            app:destination="@+id/navConvert" />
+            android:id="@+id/action_navConvert_to_navSearch"
+            app:destination="@id/navSearch" />
     </fragment>
 </navigation>

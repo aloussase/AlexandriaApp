@@ -12,7 +12,7 @@
     <string name="epub">EPUB</string>
     <string name="azw3">AZW3</string>
     <string name="home_greeting">
-        ¡Bienvenido!\n\n
+        ¡Wow, qué vacío!\n\n
         Utiliza la barra de búsqueda para empezar a buscar libros.
     </string>
     <string name="server_error">
@@ -20,8 +20,8 @@
     </string>
     <string name="search_menu_item">Buscar</string>
     <string name="convert_menu_item">Convertir</string>
-    <string name="search_books_toolbar_title">Alexandria | Buscar libros</string>
-    <string name="convert_books_toolbar_title">Alexandria | Convertir libros</string>
+    <string name="search_books_toolbar_title">Buscar libros</string>
+    <string name="convert_books_toolbar_title">Convertir libros</string>
     <string name="choose_a_file">Escoge un archivo</string>
     <string name="choose_a_file_to_convert">Escoge un archivo para convertir</string>
     <string name="mobi">MOBI</string>
