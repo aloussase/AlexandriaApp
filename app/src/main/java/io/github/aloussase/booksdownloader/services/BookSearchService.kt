@@ -95,19 +95,21 @@ class BookSearchService : BaseApplicationService() {
     }
 
     private suspend fun startSearch(searchQuery: String) {
-        withContext(Dispatchers.Main) {
-            _state.value = State.Loading
-        }
+        _state.postValue(State.Loading)
 
         val searchUrl = createSearchUrl(searchQuery)
         val doc = Jsoup.connect(searchUrl).get()
         val rows = doc.select("tr:not(:first-child)")
-        val data = rows.mapNotNull(::parseRow)
 
-        withContext(Dispatchers.Main) {
-            _state.value = State.GotResult(data)
-            stopSelf()
+        val data = mutableListOf<Book>()
+
+        for (row in rows) {
+            val book = parseRow(row) ?: continue
+            data.add(book)
+            _state.postValue(State.GotResult(data))
         }
+
+        stopSelf()
     }
 
     private fun parseRow(row: Element): Book? {
@@ -159,7 +161,7 @@ class BookSearchService : BaseApplicationService() {
         return buildString {
             append("https://libgen.is/search.php?req=")
             append(URLEncoder.encode(searchQuery, "UTF-8"))
-            append("&res=25")
+            append("&res=50")
             append("&column=def")
             append("&sort=year")
             append("&sortmode=DESC")
