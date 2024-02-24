@@ -1,0 +1,11 @@
+Alexandria is a free and open-source application for downloading and converting EBooks.
+
+Features:
+
+* Search for your favorite titles and download them
+* Can't find your favorite book in the right format? No problem, builtin EBook converter
+
+Source Code:
+
+The source code for this project is available on GitHub at
+[https://github.com/aloussase/alexandria-app].
