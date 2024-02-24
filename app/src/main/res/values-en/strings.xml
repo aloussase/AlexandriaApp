@@ -16,7 +16,7 @@
     <string name="server_error">There was an error contacting the server. Please try again later.</string>
     <string name="search_menu_item">Search</string>
     <string name="convert_menu_item">Convert</string>
-    <string name="search_books_toolbar_title">Search boks</string>
+    <string name="search_books_toolbar_title">Search books</string>
     <string name="convert_books_toolbar_title">Convert books</string>
     <string name="choose_a_file">Choose a file</string>
     <string name="choose_a_file_to_convert">Choose a file to convert</string>
@@ -29,4 +29,11 @@
     <string name="logo">logo</string>
     <string name="about">About</string>
     <string name="mas">More</string>
+    <string name="version">Version 0.1.0</string>
+    <string name="download_completed">Download finished: %s</string>
+    <string name="starting_download">Starting download of: %s</string>
+    <string name="conversion_complete">Conversion completed.</string>
+    <string name="file_loaded">File loaded: %s</string>
+    <string name="file_already_in_format">The file is already in the selected format.</string>
+    <string name="starting_conversion">Starting conversion.</string>
 </resources>

@@ -36,4 +36,10 @@
     <string name="about">Acerca</string>
     <string name="mas">Más</string>
     <string name="version">Version 0.1.0</string>
+    <string name="download_completed">Descarga completada: %s</string>
+    <string name="starting_download">Iniciando descarga de: %s</string>
+    <string name="conversion_complete">Conversión completada.</string>
+    <string name="file_loaded">Archivo cargado: %s</string>
+    <string name="file_already_in_format">El archivo ya está en el formato seleccionado.</string>
+    <string name="starting_conversion">Iniciando conversión.</string>
 </resources>

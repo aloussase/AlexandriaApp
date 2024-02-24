@@ -54,7 +54,8 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             DownloadManagerReceiver.isDownloadCompleted.collect {
-                snackbarViewModel.showSnackbar("Descarga completada: ${it.bookTitle}")
+                val message = getString(R.string.download_completed, it.bookTitle)
+                snackbarViewModel.showSnackbar(message)
             }
         }
     }

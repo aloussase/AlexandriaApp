@@ -1,19 +1,24 @@
 package io.github.aloussase.booksdownloader.ui.fragments
 
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.aloussase.booksdownloader.R
 import io.github.aloussase.booksdownloader.data.Book
 import io.github.aloussase.booksdownloader.viewmodels.BookDownloadsViewModel
 import io.github.aloussase.booksdownloader.viewmodels.SnackbarViewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
+
+const val TAG = "BaseApplicationFragment"
 
 @AndroidEntryPoint
 open class BaseApplicationFragment(layoutId: Int) : Fragment(layoutId) {
@@ -25,13 +30,18 @@ open class BaseApplicationFragment(layoutId: Int) : Fragment(layoutId) {
     protected var bookToBeDownloaded: Book? = null
 
     companion object {
-        const val RC_WRITE_EXTERNAL_STORAGE = 69
+        const val RC_PERMS = 69
         const val BOOK_TO_BE_DOWNLOADED = "bookToBeDownloaded"
     }
 
     protected val readWritePerms = arrayOf(
         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
         android.Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+
+    @RequiresApi(33)
+    protected val notificationPerms = arrayOf(
+        android.Manifest.permission.POST_NOTIFICATIONS
     )
 
     protected fun setBookForDownload(book: Book) {
@@ -48,11 +58,11 @@ open class BaseApplicationFragment(layoutId: Int) : Fragment(layoutId) {
         bookToBeDownloaded = savedInstanceState?.getParcelable(BOOK_TO_BE_DOWNLOADED)
     }
 
-    protected fun createEasyPermsOptions(): PermissionRequest {
+    protected fun createEasyPermsOptions(perms: Array<String>): PermissionRequest {
         return PermissionRequest.Builder(
             this,
-            RC_WRITE_EXTERNAL_STORAGE,
-            *readWritePerms
+            RC_PERMS,
+            *perms
         )
             .setRationale("Se necesita permiso para descargar el libro")
             .setPositiveButtonText("OK")
@@ -60,9 +70,22 @@ open class BaseApplicationFragment(layoutId: Int) : Fragment(layoutId) {
             .build()
     }
 
-    @AfterPermissionGranted(RC_WRITE_EXTERNAL_STORAGE)
+    @AfterPermissionGranted(RC_PERMS)
     protected fun downloadBook() {
-        if (EasyPermissions.hasPermissions(requireContext(), *readWritePerms)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            !EasyPermissions.hasPermissions(requireContext(), *notificationPerms)
+        ) {
+            EasyPermissions.requestPermissions(
+                createEasyPermsOptions(
+                    notificationPerms
+                )
+            )
+            return
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ||
+            EasyPermissions.hasPermissions(requireContext(), *readWritePerms)
+        ) {
             bookToBeDownloaded?.let { book ->
                 val title = "${book.title}.${book.extension}"
 
@@ -73,7 +96,12 @@ open class BaseApplicationFragment(layoutId: Int) : Fragment(layoutId) {
                     .appendPath(title)
                     .build()
 
-                snackBarViewModel.showSnackbar("Iniciando descarga de ${book.title}")
+                snackBarViewModel.showSnackbar(
+                    getString(
+                        R.string.starting_download,
+                        book.title
+                    )
+                )
 
                 bookDownloadsViewModel.onEvent(
                     BookDownloadsViewModel.Event.OnDownloadBook(
@@ -83,7 +111,11 @@ open class BaseApplicationFragment(layoutId: Int) : Fragment(layoutId) {
                 )
             }
         } else {
-            EasyPermissions.requestPermissions(createEasyPermsOptions())
+            EasyPermissions.requestPermissions(
+                createEasyPermsOptions(
+                    readWritePerms
+                )
+            )
         }
     }
 

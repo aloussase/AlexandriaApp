@@ -58,7 +58,7 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
 
         lifecycleScope.launch {
             convertViewModel.convertedBook.collect { book ->
-                snackBarViewModel.showSnackbar("Conversión completada. Iniciando descarga.")
+                snackBarViewModel.showSnackbar(getString(R.string.conversion_complete))
                 setBookForDownload(book)
                 downloadBook()
             }
@@ -84,7 +84,7 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
             if (filename != uploadedFileName) {
                 uploadedFileName = filename
                 binding.tvFileName.text = getString(R.string.archivo_cargado, filename)
-                snackBarViewModel.showSnackbar("Archivo cargado: $filename")
+                snackBarViewModel.showSnackbar(getString(R.string.file_loaded, filename))
             }
         }
     }
@@ -95,11 +95,11 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
         }
 
         if (fromFormat == convertViewModel.state.value?.conversionFormat) {
-            snackBarViewModel.showSnackbar("El archivo ya está en el formato seleccionado")
+            snackBarViewModel.showSnackbar(getString(R.string.file_already_in_format))
             return
         }
 
-        snackBarViewModel.showSnackbar("Iniciando conversión")
+        snackBarViewModel.showSnackbar(getString(R.string.starting_conversion))
         convertViewModel.onEvent(ConvertViewModel.Event.OnConvertBook)
     }
 
