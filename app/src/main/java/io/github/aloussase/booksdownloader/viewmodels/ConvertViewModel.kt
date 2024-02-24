@@ -63,6 +63,9 @@ class ConvertViewModel @Inject constructor(
     private val _conversionError = Channel<Boolean>()
     val conversionError = _conversionError.receiveAsFlow()
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun onEvent(evt: Event) {
         when (evt) {
             is Event.OnFileUploaded -> onFileUploaded(evt.uri)
@@ -82,12 +85,16 @@ class ConvertViewModel @Inject constructor(
                 val extension = filename.split('.').last()
                 val fromFormat = BookFormat.parse(extension)
 
+                _isLoading.postValue(true)
+
                 val result = conversions.convert(
                     fromFormat,
                     state.conversionFormat,
                     filename,
                     state.fileContents ?: return@launch
                 )
+
+                _isLoading.postValue(false)
 
                 when (result) {
                     is ConversionResult.Success -> {

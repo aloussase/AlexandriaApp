@@ -52,6 +52,10 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
 
         convertViewModel.state.observe(viewLifecycleOwner, ::onConvertViewModelStateChanged)
 
+        convertViewModel.isLoading.observe(viewLifecycleOwner) { loading ->
+            binding.pbLoading.visibility = if (loading) View.VISIBLE else View.GONE
+        }
+
         lifecycleScope.launch {
             convertViewModel.convertedBook.collect { book ->
                 snackBarViewModel.showSnackbar("Conversión completada. Iniciando descarga.")
