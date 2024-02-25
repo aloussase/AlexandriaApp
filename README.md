@@ -4,7 +4,7 @@
 
 <h1 align=center>Alexandria</h1>
 
-Alexandria is a free and open source application for downloading and converting EBooks.
+Alexandria is an open source application for downloading and converting EBooks.
 
 **Features:**
 
