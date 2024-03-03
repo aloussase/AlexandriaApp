@@ -10,7 +10,7 @@
 
 Alexandria is an open source application for downloading and converting EBooks.
 
-**Features:**
+**Features**
 
 - Search for your favorite titles and download them
 - Can't find your favorite book in the right format? No problem, builtin EBook converter
@@ -21,6 +21,14 @@ Alexandria is an open source application for downloading and converting EBooks.
   <img alt="Search Books" src="./fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" height=500 style="display: inline">
   <img alt="Convert Books" src="./fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" height=500 style="display: inline">
 </div>
+
+## Contributing
+
+Think you can make Alexandria better? Feel free to open an issue or PR about it!
+
+## Support
+
+All and any support is much appreciated! I you'd like to, you can <a href="https://ko-fi.com/aloussase" target="_blank">buy be a cola</a>.
 
 ## License
 
