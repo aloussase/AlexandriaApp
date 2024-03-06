@@ -1,6 +1,15 @@
-<a href='https://ko-fi.com/aloussase' target='_blank'>
-  <img height='35' style='border:0px;height:46px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' />
-</a>
+<table border="0" frame="void" rules="none">
+  <tr>
+    <td valign="center">
+      <a href='https://ko-fi.com/aloussase' target='_blank'>
+        <img height='35' style='border:0px;height:46px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+      </a>
+    </td>
+    <td valign="center">
+      <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75" border='0'>
+    </td>
+  </tr>
+</table>
 
 <p align=center>
   <img alt="logo" src="app/src/main/res/drawable-night/logo.png" width=200/>
