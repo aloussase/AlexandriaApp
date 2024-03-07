@@ -27,8 +27,6 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
 
     private val convertViewModel: ConvertViewModel by activityViewModels()
 
-    private var uploadedFileName: String? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -72,6 +70,12 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
             }
         }
 
+        lifecycleScope.launch {
+            convertViewModel.loadedFile.collect { filename ->
+                snackBarViewModel.showSnackbar(getString(R.string.file_loaded, filename))
+            }
+        }
+
         return binding.root
     }
 
@@ -80,19 +84,17 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
 
         setConversionFormat(newState.conversionFormat)
 
-        newState.fileDisplayName?.let { filename ->
-            if (filename != uploadedFileName) {
-                uploadedFileName = filename
-                binding.tvFileName.text = getString(R.string.archivo_cargado, filename)
-                snackBarViewModel.showSnackbar(getString(R.string.file_loaded, filename))
-            }
+        newState.fileDisplayName?.let {
+            binding.tvFileName.text = getString(R.string.archivo_cargado, it)
         }
     }
 
     private fun convertBook() {
-        val fromFormat = uploadedFileName?.split('.')?.lastOrNull()?.let {
-            BookFormat.parse(it)
-        }
+        val fromFormat = convertViewModel.state.value
+            ?.fileDisplayName
+            ?.split('.')
+            ?.lastOrNull()
+            ?.let { BookFormat.parse(it) }
 
         if (fromFormat == convertViewModel.state.value?.conversionFormat) {
             snackBarViewModel.showSnackbar(getString(R.string.file_already_in_format))

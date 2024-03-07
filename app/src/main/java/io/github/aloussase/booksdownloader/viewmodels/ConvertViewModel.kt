@@ -63,6 +63,9 @@ class ConvertViewModel @Inject constructor(
     private val _conversionError = Channel<Boolean>()
     val conversionError = _conversionError.receiveAsFlow()
 
+    private val _loadedFile = Channel<String>()
+    val loadedFile = _loadedFile.receiveAsFlow()
+
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -125,14 +128,19 @@ class ConvertViewModel @Inject constructor(
         contentResolver.openInputStream(uri)?.use { inputStream ->
             inputStream.use {
                 val bytes = inputStream.readBytes()
+                val filename = getUploadedFileName(uri)
 
-                Log.d(TAG, "Read ${bytes.size} bytes")
+                if (filename != null) {
+                    viewModelScope.launch {
+                        _loadedFile.send(filename)
+                    }
 
-                _state.value = _state.value?.copy(
-                    fileContents = bytes,
-                    fileDisplayName = getUploadedFileName(uri),
-                    isFileUploaded = true
-                )
+                    _state.value = _state.value?.copy(
+                        fileContents = bytes,
+                        fileDisplayName = filename,
+                        isFileUploaded = true
+                    )
+                }
             }
         }
     }
