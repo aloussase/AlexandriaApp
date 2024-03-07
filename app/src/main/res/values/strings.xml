@@ -45,4 +45,10 @@
     <string name="file_size_exceeded">El archivo no puede superar los 10MB</string>
     <string name="there_was_an_error_converting_book">Hubo un error al convertir el libro</string>
     <string name="limit_reached">Sólo puedes convertir dos libros por minuto</string>
+    <string name="notification_rationale">La aplicación necesita enviar notificaciones de descarga y conversiones</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="download_book_rationale">Se necesita permiso para descargar los libros</string>
+    <string name="search_service_title">Buscando %s</string>
+    <string name="search_service_content">Búsqueda en progreso</string>
 </resources>

@@ -57,6 +57,12 @@ class BookSearchFragment : BaseApplicationFragment(R.layout.fragment_home) {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        askForNotificationPermissions()
+    }
+
     private fun setupFormatFilters() {
         binding.filterPdf.setOnClickListener(createFilterClickListener(BookFormat.PDF))
         binding.filterEpub.setOnClickListener(createFilterClickListener(BookFormat.EPUB))

@@ -30,7 +30,8 @@ open class BaseApplicationFragment(layoutId: Int) : Fragment(layoutId) {
     protected var bookToBeDownloaded: Book? = null
 
     companion object {
-        const val RC_PERMS = 69
+        const val RC_DOWNLOAD_PERMS = 69
+        const val RC_NOTIFICATION_PERMS = 42
         const val BOOK_TO_BE_DOWNLOADED = "bookToBeDownloaded"
     }
 
@@ -58,31 +59,8 @@ open class BaseApplicationFragment(layoutId: Int) : Fragment(layoutId) {
         bookToBeDownloaded = savedInstanceState?.getParcelable(BOOK_TO_BE_DOWNLOADED)
     }
 
-    protected fun createEasyPermsOptions(perms: Array<String>): PermissionRequest {
-        return PermissionRequest.Builder(
-            this,
-            RC_PERMS,
-            *perms
-        )
-            .setRationale("Se necesita permiso para descargar el libro")
-            .setPositiveButtonText("OK")
-            .setNegativeButtonText("Cancelar")
-            .build()
-    }
-
-    @AfterPermissionGranted(RC_PERMS)
+    @AfterPermissionGranted(RC_DOWNLOAD_PERMS)
     protected fun downloadBook() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            !EasyPermissions.hasPermissions(requireContext(), *notificationPerms)
-        ) {
-            EasyPermissions.requestPermissions(
-                createEasyPermsOptions(
-                    notificationPerms
-                )
-            )
-            return
-        }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ||
             EasyPermissions.hasPermissions(requireContext(), *readWritePerms)
         ) {
@@ -111,10 +89,38 @@ open class BaseApplicationFragment(layoutId: Int) : Fragment(layoutId) {
                 )
             }
         } else {
+            val perms = PermissionRequest.Builder(
+                this,
+                RC_DOWNLOAD_PERMS,
+                *readWritePerms
+            )
+                .setRationale(getString(R.string.download_book_rationale))
+                .setPositiveButtonText(getString(R.string.ok))
+                .setNegativeButtonText(getString(R.string.cancel))
+                .build()
+
             EasyPermissions.requestPermissions(
-                createEasyPermsOptions(
-                    readWritePerms
-                )
+                perms
+            )
+        }
+    }
+
+    protected fun askForNotificationPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            !EasyPermissions.hasPermissions(requireContext(), *notificationPerms)
+        ) {
+            val perms = PermissionRequest.Builder(
+                this,
+                RC_NOTIFICATION_PERMS,
+                *notificationPerms
+            )
+                .setRationale(getString(R.string.notification_rationale))
+                .setPositiveButtonText(getString(R.string.ok))
+                .setNegativeButtonText(getString(R.string.cancel))
+                .build()
+
+            EasyPermissions.requestPermissions(
+                perms
             )
         }
     }

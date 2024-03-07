@@ -3,7 +3,6 @@ package io.github.aloussase.booksdownloader.services
 import android.content.Intent
 import android.net.Uri
 import android.os.IBinder
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.github.aloussase.booksdownloader.R
@@ -63,8 +62,8 @@ class BookSearchService : BaseApplicationService() {
         createNotificationChannel()
 
         val notification = createNotification(
-            "Buscando \"$searchQuery\"",
-            "Búsqueda en progreso",
+            getString(R.string.search_service_title, searchQuery),
+            getString(R.string.search_service_content),
             createPendingIntent<MainActivity>(),
             R.drawable.ic_download_notification
         )
@@ -79,7 +78,6 @@ class BookSearchService : BaseApplicationService() {
                     is SocketTimeoutException,
                     is HttpStatusException -> {
                         withContext(Dispatchers.Main) {
-                            Log.e(TAG, "There was an error fetching the search results")
                             _state.value = State.HadError
                             stopSelf()
                         }
