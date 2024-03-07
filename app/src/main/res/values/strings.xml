@@ -53,4 +53,5 @@
     <string name="search_service_content">Búsqueda en progreso</string>
     <string name="from_conversion_format">Convertir desde</string>
     <string name="to_conversion_format">Convertir a</string>
+    <string name="support_kofi">Cómprame una cola en https://ko-fi.com/aloussase</string>
 </resources>
