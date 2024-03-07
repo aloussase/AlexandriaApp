@@ -43,4 +43,6 @@
     <string name="file_already_in_format">El archivo ya está en el formato seleccionado.</string>
     <string name="starting_conversion">Iniciando conversión.</string>
     <string name="file_size_exceeded">El archivo no puede superar los 10MB</string>
+    <string name="there_was_an_error_converting_book">Hubo un error al convertir el libro</string>
+    <string name="limit_reached">Sólo puedes convertir dos libros por minuto</string>
 </resources>

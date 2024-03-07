@@ -63,10 +63,8 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
         }
 
         lifecycleScope.launch {
-            convertViewModel.conversionError.collect { hadError ->
-                if (hadError) {
-                    snackBarViewModel.showSnackbar(getString(R.string.conversion_error))
-                }
+            convertViewModel.conversionError.collect { errorMsg ->
+                snackBarViewModel.showSnackbar(errorMsg)
             }
         }
 

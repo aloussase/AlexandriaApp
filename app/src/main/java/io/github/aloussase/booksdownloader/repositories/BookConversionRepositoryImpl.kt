@@ -1,7 +1,6 @@
 package io.github.aloussase.booksdownloader.repositories
 
 import android.net.Uri
-import android.util.Log
 import io.github.aloussase.booksdownloader.Constants
 import io.github.aloussase.booksdownloader.data.BookFormat
 import io.github.aloussase.booksdownloader.data.ConversionResult
@@ -50,13 +49,13 @@ class BookConversionRepositoryImpl(
                 }
             }
 
-            Log.e(TAG, "Conversion request failed with status: ${result.code()}")
-            Log.e(TAG, "Response body: ${result.errorBody()?.string()}")
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Log.e(TAG, "There was an error calling API: ${e.message}")
-        }
+            if (result.code() == 429) {
+                return ConversionResult.LimitReached
+            }
 
-        return ConversionResult.Error
+            return ConversionResult.Error
+        } catch (e: Exception) {
+            return ConversionResult.Error
+        }
     }
 }

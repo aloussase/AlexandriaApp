@@ -13,10 +13,8 @@ class SnackbarViewModel : ViewModel() {
     val message: LiveData<String> get() = _message
 
     fun showSnackbar(message: String) {
-        if (_isShowing.value == false) {
-            _message.value = message
-            _isShowing.value = true
-        }
+        _message.value = message
+        _isShowing.value = true
     }
 
     fun hideSnackbar() {

@@ -12,7 +12,7 @@
     <string name="pdf">PDF</string>
     <string name="epub">EPUB</string>
     <string name="azw3">AZW3</string>
-    <string name="home_greeting">Wow such empty!\n\nUse the search bar to start searching books.</string>
+    <string name="home_greeting">Wow, such empty!\n\nUse the search bar to start searching books.</string>
     <string name="server_error">There was an error contacting the server. Please try again later.</string>
     <string name="search_menu_item">Search</string>
     <string name="convert_menu_item">Convert</string>
@@ -37,4 +37,6 @@
     <string name="file_already_in_format">The file is already in the selected format.</string>
     <string name="starting_conversion">Starting conversion.</string>
     <string name="file_size_exceeded">The file cannot be larger than 10MB</string>
+    <string name="there_was_an_error_converting_book">There was an error while converting the book</string>
+    <string name="limit_reached">You can only convert 2 books per minute</string>
 </resources>

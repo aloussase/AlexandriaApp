@@ -3,13 +3,13 @@ package io.github.aloussase.booksdownloader.viewmodels
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import io.github.aloussase.booksdownloader.R
 import io.github.aloussase.booksdownloader.data.Book
 import io.github.aloussase.booksdownloader.data.BookFormat
 import io.github.aloussase.booksdownloader.data.ConversionResult
@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ConvertViewModel @Inject constructor(
-    @ApplicationContext context: Context,
+    @ApplicationContext val context: Context,
     val conversions: BookConversionRepository,
 ) : ViewModel() {
 
@@ -60,7 +60,7 @@ class ConvertViewModel @Inject constructor(
     private val _convertedBook = Channel<Book>()
     val convertedBook = _convertedBook.receiveAsFlow()
 
-    private val _conversionError = Channel<Boolean>()
+    private val _conversionError = Channel<String>()
     val conversionError = _conversionError.receiveAsFlow()
 
     private val _loadedFile = Channel<String>()
@@ -81,8 +81,6 @@ class ConvertViewModel @Inject constructor(
     }
 
     private fun onConvertBook() {
-        Log.d(TAG, "Converting book: ${_state.value?.fileDisplayName}")
-
         val state = _state.value
         if (state != null) {
             viewModelScope.launch {
@@ -114,7 +112,19 @@ class ConvertViewModel @Inject constructor(
                     }
 
                     is ConversionResult.Error -> {
-                        _conversionError.send(true)
+                        _conversionError.send(
+                            context.getString(
+                                R.string.there_was_an_error_converting_book
+                            )
+                        )
+                    }
+
+                    is ConversionResult.LimitReached -> {
+                        _conversionError.send(
+                            context.getString(
+                                R.string.limit_reached
+                            )
+                        )
                     }
                 }
             }
