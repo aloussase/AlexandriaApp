@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,13 +19,16 @@ import io.github.aloussase.booksdownloader.viewmodels.ConvertViewModel
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
+class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert),
+    AdapterView.OnItemSelectedListener {
     companion object {
         const val TAG = "ConvertFragment"
         const val PICK_FILE = 2
     }
 
     private lateinit var binding: FragmentConvertBinding
+
+    private lateinit var arrayAdapter: ArrayAdapter<CharSequence>
 
     private val convertViewModel: ConvertViewModel by activityViewModels()
 
@@ -39,13 +44,25 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
         binding.btnChooseFile.setOnClickListener { openFile() }
         binding.btnConvert.setOnClickListener { convertBook() }
 
-        binding.radioGroup.setOnCheckedChangeListener { _, id ->
-            when (id) {
-                R.id.rbPdf -> selectConversionFormat(BookFormat.PDF)
-                R.id.rbAzw3 -> selectConversionFormat(BookFormat.AZW3)
-                R.id.rbEpub -> selectConversionFormat(BookFormat.EPUB)
-                R.id.rbMobi -> selectConversionFormat(BookFormat.MOBI)
-            }
+        val spinnerTo = binding.spinnerToConversionFormat
+        val spinnerFrom = binding.spinnerFromConversionFormat
+
+        arrayAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.conversion_format_options,
+            android.R.layout.simple_spinner_item
+        )
+
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTo.adapter = arrayAdapter
+        spinnerTo.onItemSelectedListener = this
+
+        spinnerFrom.adapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.conversion_format_options,
+            android.R.layout.simple_spinner_item
+        ).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
 
         convertViewModel.state.observe(viewLifecycleOwner, ::onConvertViewModelStateChanged)
@@ -114,12 +131,17 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
     }
 
     private fun setConversionFormat(format: BookFormat) {
-        when (format) {
-            BookFormat.PDF -> binding.rbPdf.isChecked = true
-            BookFormat.AZW3 -> binding.rbAzw3.isChecked = true
-            BookFormat.EPUB -> binding.rbEpub.isChecked = true
-            BookFormat.MOBI -> binding.rbMobi.isChecked = true
-        }
+        binding.spinnerToConversionFormat.setSelection(
+            format.ordinal
+        )
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        selectConversionFormat(BookFormat.entries[position])
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        selectConversionFormat(BookFormat.entries[0])
     }
 
     private fun selectConversionFormat(format: BookFormat) {

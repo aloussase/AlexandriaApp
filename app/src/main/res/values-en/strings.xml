@@ -19,7 +19,7 @@
     <string name="search_books_toolbar_title">Search books</string>
     <string name="convert_books_toolbar_title">Convert books</string>
     <string name="choose_a_file">Choose a file</string>
-    <string name="choose_a_file_to_convert">Choose a file to convert</string>
+    <string name="choose_a_file_to_convert">Book</string>
     <string name="mobi">MOBI</string>
     <string name="conversion_format">Convert to which format?</string>
     <string name="convert">Convert</string>
@@ -45,4 +45,6 @@
     <string name="download_book_rationale">Permission is needed to download books</string>
     <string name="search_service_title">Searching %s</string>
     <string name="search_service_content">Search in progress</string>
+    <string name="from_conversion_format">Convert from</string>
+    <string name="to_conversion_format">Convert to</string>
 </resources>

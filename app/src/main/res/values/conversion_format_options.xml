@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="conversion_format_options">
+        <item>PDF</item>
+        <item>EPUB</item>
+        <item>MOBI</item>
+        <item>AZW3</item>
+    </string-array>
+</resources>

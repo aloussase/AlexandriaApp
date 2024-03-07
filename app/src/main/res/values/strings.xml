@@ -23,7 +23,7 @@
     <string name="search_books_toolbar_title">Buscar libros</string>
     <string name="convert_books_toolbar_title">Convertir libros</string>
     <string name="choose_a_file">Escoge un archivo</string>
-    <string name="choose_a_file_to_convert">Escoge un archivo para convertir</string>
+    <string name="choose_a_file_to_convert">Libro</string>
     <string name="mobi">MOBI</string>
     <string name="conversion_format">¿A qué formato quieres convertirlo?</string>
     <string name="convert">Convertir</string>
@@ -51,4 +51,6 @@
     <string name="download_book_rationale">Se necesita permiso para descargar los libros</string>
     <string name="search_service_title">Buscando %s</string>
     <string name="search_service_content">Búsqueda en progreso</string>
+    <string name="from_conversion_format">Convertir desde</string>
+    <string name="to_conversion_format">Convertir a</string>
 </resources>

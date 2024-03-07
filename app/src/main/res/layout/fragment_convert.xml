@@ -1,116 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvChooseFile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/choose_a_file_to_convert"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnChooseFile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintVertical_chainStyle="packed" />
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_marginBottom="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btnChooseFile"
-        style="@style/AppButtonStyle"
-        android:text="@string/choose_a_file"
-        app:layout_constraintBottom_toTopOf="@+id/tvConversionFormat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvChooseFile"
-        app:layout_constraintVertical_bias="0.5" />
+        <TextView
+            android:id="@+id/tvFromConversionFormat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/from_conversion_format" />
 
-    <TextView
-        android:id="@+id/tvConversionFormat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/conversion_format"
-        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Spinner
+            android:id="@+id/spinnerFromConversionFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_marginBottom="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvToConversionFormat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/to_conversion_format" />
+
+        <Spinner
+            android:id="@+id/spinnerToConversionFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvChooseFile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/choose_a_file_to_convert" />
+
+        <Button
+            android:id="@+id/btnChooseFile"
+            style="@style/AppButtonStyle"
+            android:layout_weight="1"
+            android:text="@string/choose_a_file" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvFileName"
         android:layout_width="wrap_content"
-        android:textAlignment="center"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:textColor="@color/light_gray"
         android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnChooseFile"
+        android:layout_marginBottom="24dp"
         tools:text="Cargado: The way of kings.pdf" />
+
 
     <ProgressBar
         android:id="@+id/pb_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
+        android:textAlignment="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:minWidth="50dp"
-        android:minHeight="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnConvert"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checkedButton="@id/rbPdf"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btnConvert"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnChooseFile">
-
-        <RadioButton
-            android:id="@+id/rbPdf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pdf" />
-
-        <RadioButton
-            android:id="@+id/rbEpub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:text="@string/epub" />
-
-        <RadioButton
-            android:id="@+id/rbAzw3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="6dp"
-            android:text="@string/azw3" />
-
-        <RadioButton
-            android:id="@+id/rbMobi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mobi" />
-
-    </RadioGroup>
+        android:minHeight="50dp" />
 
     <Button
         android:id="@+id/btnConvert"
         style="@style/AppButtonStyle"
+        android:layout_gravity="center_horizontal"
         android:enabled="false"
-        android:text="@string/convert"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        android:text="@string/convert" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
