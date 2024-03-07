@@ -6,7 +6,19 @@ Features:
 * Can't find your favorite book in the right format? No problem, builtin EBook
   converter
 
+Download sources:
+
+Alexandria uses the following download sources:
+
+* Libgen (http://libgen.is/) which is considered non-free for being a shadow library
+
+Ebook conversion sources:
+
+* Alexandria API (https://alexandria.up.railway.app) which is a proprietary custom-made source
+
+I will consider open-sourcing the Alexandria API once its mature enough.
+
 Source Code:
 
 The source code for this project is available on GitHub at
-[https://github.com/aloussase/alexandria-app].
+https://github.com/aloussase/alexandria-app.
