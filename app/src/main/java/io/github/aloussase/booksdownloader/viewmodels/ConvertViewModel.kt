@@ -69,6 +69,9 @@ class ConvertViewModel @Inject constructor(
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _fileSizeExceeded = Channel<Boolean>()
+    val fileSizeExceeded = _fileSizeExceeded.receiveAsFlow()
+
     fun onEvent(evt: Event) {
         when (evt) {
             is Event.OnFileUploaded -> onFileUploaded(evt.uri)
@@ -129,6 +132,12 @@ class ConvertViewModel @Inject constructor(
             inputStream.use {
                 val bytes = inputStream.readBytes()
                 val filename = getUploadedFileName(uri)
+                val fileSize = getUploadedFileSize(uri)
+
+                if (fileSize != null && fileSize > 10) {
+                    viewModelScope.launch { _fileSizeExceeded.send(true) }
+                    return
+                }
 
                 if (filename != null) {
                     viewModelScope.launch {
@@ -152,6 +161,19 @@ class ConvertViewModel @Inject constructor(
                 val displayNameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                 val displayName = it.getString(displayNameIndex)
                 return displayName
+            }
+        }
+
+        return null
+    }
+
+    private fun getUploadedFileSize(uri: Uri): Int? {
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val fileSizeIndex = it.getColumnIndex(OpenableColumns.SIZE)
+                val fileSize = it.getInt(fileSizeIndex)
+                return fileSize / (1024 * 1024)
             }
         }
 

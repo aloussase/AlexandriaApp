@@ -1,1 +1,1 @@
-Alexandria is an open-source application for downloading and converting EBooks.
+Download and convert EBooks.

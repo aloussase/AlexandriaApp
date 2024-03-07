@@ -76,6 +76,16 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
             }
         }
 
+        lifecycleScope.launch {
+            convertViewModel.fileSizeExceeded.collect { fileSizeExceeded ->
+                if (fileSizeExceeded) {
+                    snackBarViewModel.showSnackbar(
+                        getString(R.string.file_size_exceeded)
+                    )
+                }
+            }
+        }
+
         return binding.root
     }
 
