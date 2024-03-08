@@ -2,9 +2,13 @@ package io.github.aloussase.booksdownloader.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,6 +67,34 @@ class BookSearchFragment : BaseApplicationFragment(R.layout.fragment_home) {
         askForNotificationPermissions()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.findItem(R.id.action_filter)?.isVisible = false
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        val booksEmpty = bookSearchViewModel.books.value?.isEmpty() ?: return
+        menu.findItem(R.id.action_filter)?.isVisible = !booksEmpty
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_filter -> {
+                binding.filters.isVisible = !binding.filters.isVisible
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setupFormatFilters() {
         binding.filterPdf.setOnClickListener(createFilterClickListener(BookFormat.PDF))
         binding.filterEpub.setOnClickListener(createFilterClickListener(BookFormat.EPUB))
@@ -93,7 +125,6 @@ class BookSearchFragment : BaseApplicationFragment(R.layout.fragment_home) {
                     binding.llLoading.visibility = View.GONE
                     binding.tvGreeting.visibility = View.VISIBLE
                     binding.tvError.visibility = View.GONE
-                    binding.filters.visibility = View.GONE
                 }
 
                 is BookSearchService.State.Loading -> {
@@ -101,17 +132,16 @@ class BookSearchFragment : BaseApplicationFragment(R.layout.fragment_home) {
                     binding.llLoading.visibility = View.VISIBLE
                     binding.tvGreeting.visibility = View.GONE
                     binding.tvError.visibility = View.GONE
-                    binding.filters.visibility = View.GONE
                 }
 
                 is BookSearchService.State.GotResult -> {
                     bookSearchViewModel.onEvent(BookSearchViewModel.Event.OnBooksLoaded(it.books))
+                    requireActivity().invalidateOptionsMenu()
 
                     binding.rvBooks.visibility = View.VISIBLE
                     binding.llLoading.visibility = View.GONE
                     binding.tvGreeting.visibility = View.GONE
                     binding.tvError.visibility = View.GONE
-                    binding.filters.visibility = View.VISIBLE
                 }
 
                 is BookSearchService.State.HadError -> {
@@ -119,7 +149,6 @@ class BookSearchFragment : BaseApplicationFragment(R.layout.fragment_home) {
                     binding.tvGreeting.visibility = View.GONE
                     binding.llLoading.visibility = View.GONE
                     binding.tvError.visibility = View.VISIBLE
-                    binding.filters.visibility = View.GONE
                 }
             }
         }

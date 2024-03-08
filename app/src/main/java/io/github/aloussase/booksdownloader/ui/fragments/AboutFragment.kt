@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import io.github.aloussase.booksdownloader.R
@@ -24,6 +25,16 @@ class AboutFragment : BaseApplicationFragment(R.layout.fragment_about) {
         binding.ibKofi.setOnClickListener { goToUrl("https://ko-fi.com/aloussase") }
 
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.clear()
     }
 
     private fun goToUrl(url: String) {
