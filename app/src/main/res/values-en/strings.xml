@@ -29,7 +29,7 @@
     <string name="logo">logo</string>
     <string name="about">About</string>
     <string name="mas">More</string>
-    <string name="version">Version 0.1.0</string>
+    <string name="version">Version 0.2.0</string>
     <string name="download_completed">Download finished: %s</string>
     <string name="starting_download">Starting download of: %s</string>
     <string name="conversion_complete">Conversion completed.</string>
@@ -48,4 +48,8 @@
     <string name="from_conversion_format">Convert from</string>
     <string name="to_conversion_format">Convert to</string>
     <string name="support_kofi">Buy me a cola at https://ko-fi.com/aloussase</string>
+    <string name="github">Github</string>
+    <string name="linkedin">Linkedin</string>
+    <string name="kofi">Ko-fi</string>
+    <string name="action_filter">Filter</string>
 </resources>
