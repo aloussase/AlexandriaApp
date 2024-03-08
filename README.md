@@ -31,6 +31,10 @@ Alexandria is an open source application for downloading and converting EBooks.
 - Uses a custom-made proprietary API for converting books from one format to another. I will
   consider open-sourcing this once it's mature enough.
 
+## Install from F-droid
+
+Download the F-droid app from [their website](https://f-droid.org/) and search for Alexandria.
+
 ## Screenshots
 
 <div align=center>
