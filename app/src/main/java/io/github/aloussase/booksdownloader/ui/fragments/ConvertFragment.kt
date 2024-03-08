@@ -94,24 +94,12 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
         }
 
         lifecycleScope.launch {
-            convertViewModel.conversionError.collect { errorMsg ->
-                snackBarViewModel.showSnackbar(errorMsg)
-            }
+            convertViewModel.error.collect { handleError(it) }
         }
 
         lifecycleScope.launch {
             convertViewModel.loadedFile.collect { filename ->
                 snackBarViewModel.showSnackbar(getString(R.string.file_loaded, filename))
-            }
-        }
-
-        lifecycleScope.launch {
-            convertViewModel.fileSizeExceeded.collect { fileSizeExceeded ->
-                if (fileSizeExceeded) {
-                    snackBarViewModel.showSnackbar(
-                        getString(R.string.file_size_exceeded)
-                    )
-                }
             }
         }
 
@@ -161,6 +149,19 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
                 format
             )
         )
+    }
+
+    private fun handleError(error: ConvertViewModel.Error) {
+        when (error) {
+            is ConvertViewModel.Error.FileSizeExceeded ->
+                snackBarViewModel.showSnackbar(error.reason)
+
+            is ConvertViewModel.Error.LimitExceeded ->
+                snackBarViewModel.showSnackbar(error.reason)
+
+            is ConvertViewModel.Error.ConversionFailed ->
+                snackBarViewModel.showSnackbar(error.reason)
+        }
     }
 
     private fun openFile() {

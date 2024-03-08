@@ -33,6 +33,12 @@ class ConvertViewModel @Inject constructor(
         data object OnConvertBook : Event()
     }
 
+    sealed class Error(reason: String) {
+        data class ConversionFailed(val reason: String) : Error(reason)
+        data class LimitExceeded(val reason: String) : Error(reason)
+        data class FileSizeExceeded(val reason: String) : Error(reason)
+    }
+
     companion object {
         private const val TAG = "ConvertViewModel"
     }
@@ -62,17 +68,14 @@ class ConvertViewModel @Inject constructor(
     private val _convertedBook = Channel<Book>()
     val convertedBook = _convertedBook.receiveAsFlow()
 
-    private val _conversionError = Channel<String>()
-    val conversionError = _conversionError.receiveAsFlow()
-
     private val _loadedFile = Channel<String>()
     val loadedFile = _loadedFile.receiveAsFlow()
 
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _fileSizeExceeded = Channel<Boolean>()
-    val fileSizeExceeded = _fileSizeExceeded.receiveAsFlow()
+    private val _error = Channel<Error>()
+    val error = _error.receiveAsFlow()
 
     fun onEvent(evt: Event) {
         when (evt) {
@@ -113,17 +116,21 @@ class ConvertViewModel @Inject constructor(
                     }
 
                     is ConversionResult.Error -> {
-                        _conversionError.send(
-                            context.getString(
-                                R.string.there_was_an_error_converting_book
+                        _error.send(
+                            Error.ConversionFailed(
+                                context.getString(
+                                    R.string.there_was_an_error_converting_book
+                                )
                             )
                         )
                     }
 
                     is ConversionResult.LimitReached -> {
-                        _conversionError.send(
-                            context.getString(
-                                R.string.limit_reached
+                        _error.send(
+                            Error.LimitExceeded(
+                                context.getString(
+                                    R.string.limit_reached
+                                )
                             )
                         )
                     }
@@ -152,7 +159,15 @@ class ConvertViewModel @Inject constructor(
                 val fileSize = getUploadedFileSize(uri)
 
                 if (fileSize != null && fileSize > 10) {
-                    viewModelScope.launch { _fileSizeExceeded.send(true) }
+                    viewModelScope.launch {
+                        _error.send(
+                            Error.FileSizeExceeded(
+                                context.getString(
+                                    R.string.file_size_exceeded
+                                )
+                            )
+                        )
+                    }
                     return
                 }
 
