@@ -27,6 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,12 +45,51 @@
                 android:text="@string/version" />
 
             <TextView
+                style="@style/AboutButton"
                 android:autoLink="web"
-                android:text="@string/support_kofi"
-                style="@style/AboutButton" />
+                android:text="@string/support_kofi" />
 
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+
+        <ImageButton
+            android:id="@+id/ibGithub"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/github"
+            android:background="@drawable/github" />
+
+        <ImageButton
+            android:id="@+id/ibLinkedin"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:contentDescription="@string/linkedin"
+            android:background="@drawable/linkedin" />
+
+        <ImageButton
+            android:id="@+id/ibKofi"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/kofi"
+            android:background="@drawable/kofi" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
