@@ -13,23 +13,38 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.aloussase.booksdownloader.R
 import io.github.aloussase.booksdownloader.data.BookFormat
-import io.github.aloussase.booksdownloader.data.parse
 import io.github.aloussase.booksdownloader.databinding.FragmentConvertBinding
 import io.github.aloussase.booksdownloader.viewmodels.ConvertViewModel
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert),
-    AdapterView.OnItemSelectedListener {
+class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert) {
     companion object {
         const val TAG = "ConvertFragment"
         const val PICK_FILE = 2
     }
 
+    private val fromConversionFormatSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            selectFromConversionFormat(BookFormat.entries[position])
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            selectFromConversionFormat(BookFormat.entries[0])
+        }
+    }
+
+    private val toConversionFormatSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            selectToConversionFormat(BookFormat.entries[position])
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            selectToConversionFormat(BookFormat.entries[0])
+        }
+    }
+
     private lateinit var binding: FragmentConvertBinding
-
-    private lateinit var arrayAdapter: ArrayAdapter<CharSequence>
-
     private val convertViewModel: ConvertViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -45,25 +60,24 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert),
         binding.btnConvert.setOnClickListener { convertBook() }
 
         val spinnerTo = binding.spinnerToConversionFormat
-        val spinnerFrom = binding.spinnerFromConversionFormat
-
-        arrayAdapter = ArrayAdapter.createFromResource(
+        val toConversionFormatAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.conversion_format_options,
             android.R.layout.simple_spinner_item
         )
+        toConversionFormatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTo.adapter = toConversionFormatAdapter
+        spinnerTo.onItemSelectedListener = toConversionFormatSelectedListener
 
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTo.adapter = arrayAdapter
-        spinnerTo.onItemSelectedListener = this
-
-        spinnerFrom.adapter = ArrayAdapter.createFromResource(
+        val spinnerFrom = binding.spinnerFromConversionFormat
+        val fromConversionFormatAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.conversion_format_options,
             android.R.layout.simple_spinner_item
-        ).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        }
+        )
+        fromConversionFormatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerFrom.adapter = fromConversionFormatAdapter
+        spinnerFrom.onItemSelectedListener = fromConversionFormatSelectedListener
 
         convertViewModel.state.observe(viewLifecycleOwner, ::onConvertViewModelStateChanged)
 
@@ -107,7 +121,13 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert),
     private fun onConvertViewModelStateChanged(newState: ConvertViewModel.State) {
         binding.btnConvert.isEnabled = newState.isFileUploaded
 
-        setConversionFormat(newState.conversionFormat)
+        binding.spinnerFromConversionFormat.setSelection(
+            newState.fromConversionFormat.ordinal
+        )
+
+        binding.spinnerToConversionFormat.setSelection(
+            newState.toConversionFormat.ordinal
+        )
 
         newState.fileDisplayName?.let {
             binding.tvFileName.text = getString(R.string.archivo_cargado, it)
@@ -115,13 +135,10 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert),
     }
 
     private fun convertBook() {
-        val fromFormat = convertViewModel.state.value
-            ?.fileDisplayName
-            ?.split('.')
-            ?.lastOrNull()
-            ?.let { BookFormat.parse(it) }
-
-        if (fromFormat == convertViewModel.state.value?.conversionFormat) {
+        if (
+            convertViewModel.state.value?.fromConversionFormat ==
+            convertViewModel.state.value?.toConversionFormat
+        ) {
             snackBarViewModel.showSnackbar(getString(R.string.file_already_in_format))
             return
         }
@@ -130,23 +147,17 @@ class ConvertFragment : BaseApplicationFragment(R.layout.fragment_convert),
         convertViewModel.onEvent(ConvertViewModel.Event.OnConvertBook)
     }
 
-    private fun setConversionFormat(format: BookFormat) {
-        binding.spinnerToConversionFormat.setSelection(
-            format.ordinal
+    private fun selectFromConversionFormat(format: BookFormat) {
+        convertViewModel.onEvent(
+            ConvertViewModel.Event.OnSelectFromConversionFormat(
+                format
+            )
         )
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        selectConversionFormat(BookFormat.entries[position])
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        selectConversionFormat(BookFormat.entries[0])
-    }
-
-    private fun selectConversionFormat(format: BookFormat) {
+    private fun selectToConversionFormat(format: BookFormat) {
         convertViewModel.onEvent(
-            ConvertViewModel.Event.OnSelectConversionFormat(
+            ConvertViewModel.Event.OnSelectToConversionFormat(
                 format
             )
         )

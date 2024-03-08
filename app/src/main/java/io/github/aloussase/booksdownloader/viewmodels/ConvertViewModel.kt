@@ -14,7 +14,6 @@ import io.github.aloussase.booksdownloader.data.Book
 import io.github.aloussase.booksdownloader.data.BookFormat
 import io.github.aloussase.booksdownloader.data.ConversionResult
 import io.github.aloussase.booksdownloader.data.empty
-import io.github.aloussase.booksdownloader.data.parse
 import io.github.aloussase.booksdownloader.repositories.BookConversionRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -28,7 +27,8 @@ class ConvertViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class Event {
-        data class OnSelectConversionFormat(val format: BookFormat) : Event()
+        data class OnSelectFromConversionFormat(val format: BookFormat) : Event()
+        data class OnSelectToConversionFormat(val format: BookFormat) : Event()
         data class OnFileUploaded(val uri: Uri) : Event()
         data object OnConvertBook : Event()
     }
@@ -38,7 +38,8 @@ class ConvertViewModel @Inject constructor(
     }
 
     data class State(
-        val conversionFormat: BookFormat,
+        val fromConversionFormat: BookFormat,
+        val toConversionFormat: BookFormat,
         val isFileUploaded: Boolean,
         val fileDisplayName: String?,
         val fileContents: ByteArray?,
@@ -48,6 +49,7 @@ class ConvertViewModel @Inject constructor(
 
     private val _state = MutableLiveData(
         State(
+            BookFormat.PDF,
             BookFormat.PDF,
             false,
             null,
@@ -75,7 +77,8 @@ class ConvertViewModel @Inject constructor(
     fun onEvent(evt: Event) {
         when (evt) {
             is Event.OnFileUploaded -> onFileUploaded(evt.uri)
-            is Event.OnSelectConversionFormat -> onSelectConversionFormat(evt.format)
+            is Event.OnSelectFromConversionFormat -> onSelectFromConversionFormat(evt.format)
+            is Event.OnSelectToConversionFormat -> onSelectToConversionFormat(evt.format)
             is Event.OnConvertBook -> onConvertBook()
         }
     }
@@ -86,14 +89,12 @@ class ConvertViewModel @Inject constructor(
             viewModelScope.launch {
                 val filename = state.fileDisplayName ?: return@launch
                 val title = filename.split('.').dropLast(1).joinToString()
-                val extension = filename.split('.').last()
-                val fromFormat = BookFormat.parse(extension)
 
                 _isLoading.postValue(true)
 
                 val result = conversions.convert(
-                    fromFormat,
-                    state.conversionFormat,
+                    state.fromConversionFormat,
+                    state.toConversionFormat,
                     filename,
                     state.fileContents ?: return@launch
                 )
@@ -104,7 +105,7 @@ class ConvertViewModel @Inject constructor(
                     is ConversionResult.Success -> {
                         val book = Book.empty().copy(
                             title = title,
-                            extension = state.conversionFormat.name.lowercase(),
+                            extension = state.toConversionFormat.name.lowercase(),
                             downloadUrl = result.downloadUrl
                         )
 
@@ -131,9 +132,15 @@ class ConvertViewModel @Inject constructor(
         }
     }
 
-    private fun onSelectConversionFormat(format: BookFormat) {
+    private fun onSelectFromConversionFormat(format: BookFormat) {
         _state.value = _state.value?.copy(
-            conversionFormat = format
+            fromConversionFormat = format
+        )
+    }
+
+    private fun onSelectToConversionFormat(format: BookFormat) {
+        _state.value = _state.value?.copy(
+            toConversionFormat = format
         )
     }
 
