@@ -7,10 +7,12 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.aloussase.booksdownloader.Constants
+import io.github.aloussase.booksdownloader.domain.repository.BookConversionRepository
+import io.github.aloussase.booksdownloader.domain.repository.BookDownloadsRepository
+import io.github.aloussase.booksdownloader.domain.use_case.ConvertBookUseCase
+import io.github.aloussase.booksdownloader.domain.use_case.FilterBooksUseCase
 import io.github.aloussase.booksdownloader.remote.AlexandriaApi
-import io.github.aloussase.booksdownloader.repositories.BookConversionRepository
 import io.github.aloussase.booksdownloader.repositories.BookConversionRepositoryImpl
-import io.github.aloussase.booksdownloader.repositories.BookDownloadsRepository
 import io.github.aloussase.booksdownloader.repositories.BookDownloadsRepositoryImpl
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -36,6 +38,22 @@ object AppModule {
     @Provides
     fun provideBookConversionRepository(alexandriaApi: AlexandriaApi): BookConversionRepository {
         return BookConversionRepositoryImpl(alexandriaApi)
+    }
+
+    @Singleton
+    @Provides
+    fun provideConvertBookUseCase(
+        conversions: BookConversionRepository
+    ): ConvertBookUseCase {
+        return ConvertBookUseCase(
+            conversions
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideFilterBooksUseCase(): FilterBooksUseCase {
+        return FilterBooksUseCase()
     }
 
     @Singleton

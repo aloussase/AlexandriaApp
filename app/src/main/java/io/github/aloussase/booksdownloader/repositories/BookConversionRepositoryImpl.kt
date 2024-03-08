@@ -4,6 +4,7 @@ import android.net.Uri
 import io.github.aloussase.booksdownloader.Constants
 import io.github.aloussase.booksdownloader.data.BookFormat
 import io.github.aloussase.booksdownloader.data.ConversionResult
+import io.github.aloussase.booksdownloader.domain.repository.BookConversionRepository
 import io.github.aloussase.booksdownloader.remote.AlexandriaApi
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -13,7 +14,7 @@ class BookConversionRepositoryImpl(
     val alexandriaApi: AlexandriaApi
 ) : BookConversionRepository {
     companion object {
-        const val TAG = "BookConversionRepositor"
+        const val TAG = "BookConversionRepository"
     }
 
     override suspend fun convert(

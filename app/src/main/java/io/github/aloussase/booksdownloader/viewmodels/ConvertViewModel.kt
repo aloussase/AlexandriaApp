@@ -14,7 +14,7 @@ import io.github.aloussase.booksdownloader.data.Book
 import io.github.aloussase.booksdownloader.data.BookFormat
 import io.github.aloussase.booksdownloader.data.ConversionResult
 import io.github.aloussase.booksdownloader.data.empty
-import io.github.aloussase.booksdownloader.repositories.BookConversionRepository
+import io.github.aloussase.booksdownloader.domain.use_case.ConvertBookUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ConvertViewModel @Inject constructor(
     @ApplicationContext val context: Context,
-    val conversions: BookConversionRepository,
+    val convertBook: ConvertBookUseCase,
 ) : ViewModel() {
 
     sealed class Event {
@@ -87,15 +87,14 @@ class ConvertViewModel @Inject constructor(
     }
 
     private fun onConvertBook() {
-        val state = _state.value
-        if (state != null) {
+        _state.value?.let { state ->
             viewModelScope.launch {
                 val filename = state.fileDisplayName ?: return@launch
                 val title = filename.split('.').dropLast(1).joinToString()
 
                 _isLoading.postValue(true)
 
-                val result = conversions.convert(
+                val result = convertBook.execute(
                     state.fromConversionFormat,
                     state.toConversionFormat,
                     filename,

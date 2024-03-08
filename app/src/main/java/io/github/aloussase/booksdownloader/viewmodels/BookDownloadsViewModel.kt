@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.aloussase.booksdownloader.data.Book
-import io.github.aloussase.booksdownloader.repositories.BookDownloadsRepository
+import io.github.aloussase.booksdownloader.domain.repository.BookDownloadsRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

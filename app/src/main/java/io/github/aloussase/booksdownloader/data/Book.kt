@@ -29,7 +29,7 @@ fun Book.Companion.empty(): Book {
         authors = emptyList(),
         title = "",
         extension = "",
-        downloadUrl = Uri.EMPTY,
+        downloadUrl = Uri.parse("https://example.com"),
         imageUrl = "",
         size = ""
     )

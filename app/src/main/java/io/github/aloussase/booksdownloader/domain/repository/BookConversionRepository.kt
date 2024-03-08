@@ -1,4 +1,4 @@
-package io.github.aloussase.booksdownloader.repositories
+package io.github.aloussase.booksdownloader.domain.repository
 
 import io.github.aloussase.booksdownloader.data.BookFormat
 import io.github.aloussase.booksdownloader.data.ConversionResult

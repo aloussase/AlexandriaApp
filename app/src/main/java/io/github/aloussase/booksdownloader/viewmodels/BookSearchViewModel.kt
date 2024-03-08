@@ -3,11 +3,16 @@ package io.github.aloussase.booksdownloader.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.aloussase.booksdownloader.data.Book
 import io.github.aloussase.booksdownloader.data.BookFormat
-import io.github.aloussase.booksdownloader.data.parse
+import io.github.aloussase.booksdownloader.domain.use_case.FilterBooksUseCase
+import javax.inject.Inject
 
-class BookSearchViewModel : ViewModel() {
+@HiltViewModel
+class BookSearchViewModel @Inject constructor(
+    val filterBooks: FilterBooksUseCase
+) : ViewModel() {
 
     sealed class Event {
         data class OnApplyFilter(val format: BookFormat) : Event()
@@ -57,9 +62,7 @@ class BookSearchViewModel : ViewModel() {
     private fun updateFilteredBooks() {
         _books.value?.let { books ->
             _appliedFormatFilters.value?.let { filters ->
-                _filteredBooks.value = books.filter { book ->
-                    BookFormat.parse(book.extension) in filters
-                }
+                _filteredBooks.value = filterBooks.execute(books, filters)
             }
         }
     }

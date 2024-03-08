@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import io.github.aloussase.booksdownloader.data.Book
+import io.github.aloussase.booksdownloader.domain.repository.BookDownloadsRepository
 import javax.inject.Inject
 
 class BookDownloadsRepositoryImpl @Inject constructor(
