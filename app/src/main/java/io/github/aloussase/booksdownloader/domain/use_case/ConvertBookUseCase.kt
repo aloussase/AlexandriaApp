@@ -15,6 +15,18 @@ class ConvertBookUseCase(
         filename: String,
         bytes: ByteArray
     ): ConversionResult = withContext(Dispatchers.IO) {
+        if (from == to) {
+            return@withContext ConversionResult.AlreadyInRightFormat
+        }
+
+        if (filename.isEmpty()) {
+            return@withContext ConversionResult.EmptyFilename
+        }
+
+        if (bytes.isEmpty()) {
+            return@withContext ConversionResult.EmptyContents
+        }
+
         conversions.convert(
             from,
             to,

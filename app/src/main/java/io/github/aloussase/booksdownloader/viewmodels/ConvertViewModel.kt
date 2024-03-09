@@ -114,6 +114,36 @@ class ConvertViewModel @Inject constructor(
                         _convertedBook.send(book)
                     }
 
+                    is ConversionResult.EmptyContents -> {
+                        _error.send(
+                            Error.ConversionFailed(
+                                context.getString(
+                                    R.string.empty_contents
+                                )
+                            )
+                        )
+                    }
+
+                    is ConversionResult.EmptyFilename -> {
+                        _error.send(
+                            Error.ConversionFailed(
+                                context.getString(
+                                    R.string.empty_filename
+                                )
+                            )
+                        )
+                    }
+
+                    is ConversionResult.AlreadyInRightFormat -> {
+                        _error.send(
+                            Error.ConversionFailed(
+                                context.getString(
+                                    R.string.already_in_right_format
+                                )
+                            )
+                        )
+                    }
+
                     is ConversionResult.Error -> {
                         _error.send(
                             Error.ConversionFailed(
