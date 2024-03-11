@@ -6,7 +6,9 @@
       </a>
     </td>
     <td valign="center">
-      <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75" border='0'>
+      <a href='https://f-droid.org/en/packages/io.github.aloussase.booksdownloader' target='_blank'>
+        <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75" border='0' alt="Get it on F-Droid" />
+      </a>
     </td>
   </tr>
 </table>
