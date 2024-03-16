@@ -32,4 +32,11 @@
     <action
         android:id="@+id/action_global_aboutFragment"
         app:destination="@id/navAbout" />
+    <fragment
+        android:id="@+id/navSettings"
+        android:name="io.github.aloussase.booksdownloader.ui.fragments.SettingsFragment"
+        android:label="@string/settings" />
+    <action
+        android:id="@+id/action_global_settingsFragment"
+        app:destination="@id/navSettings" />
 </navigation>

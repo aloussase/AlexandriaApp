@@ -22,6 +22,11 @@ class MoreFragment : BaseApplicationFragment(R.layout.fragment_more) {
             navController.navigate(R.id.navAbout)
         }
 
+        binding.tvSettings.setOnClickListener {
+            val navController = findNavController()
+            navController.navigate(R.id.navSettings)
+        }
+
         return binding.root
     }
 

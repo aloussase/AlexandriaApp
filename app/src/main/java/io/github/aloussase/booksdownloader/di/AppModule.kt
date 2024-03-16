@@ -9,11 +9,13 @@ import dagger.hilt.components.SingletonComponent
 import io.github.aloussase.booksdownloader.Constants
 import io.github.aloussase.booksdownloader.domain.repository.BookConversionRepository
 import io.github.aloussase.booksdownloader.domain.repository.BookDownloadsRepository
+import io.github.aloussase.booksdownloader.domain.repository.SettingsRepository
 import io.github.aloussase.booksdownloader.domain.use_case.ConvertBookUseCase
 import io.github.aloussase.booksdownloader.domain.use_case.FilterBooksUseCase
 import io.github.aloussase.booksdownloader.remote.AlexandriaApi
 import io.github.aloussase.booksdownloader.repositories.BookConversionRepositoryImpl
 import io.github.aloussase.booksdownloader.repositories.BookDownloadsRepositoryImpl
+import io.github.aloussase.booksdownloader.repositories.SettingsRepositoryImpl
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -70,6 +72,14 @@ object AppModule {
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create(AlexandriaApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun providesSettingsRepository(
+        @ApplicationContext context: Context
+    ): SettingsRepository {
+        return SettingsRepositoryImpl(context)
     }
 
 }

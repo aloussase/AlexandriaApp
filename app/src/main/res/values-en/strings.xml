@@ -52,4 +52,9 @@
     <string name="linkedin">Linkedin</string>
     <string name="kofi">Ko-fi</string>
     <string name="action_filter">Filter</string>
+    <string name="empty_contents">The file is empty</string>
+    <string name="empty_filename">The file is not valid</string>
+    <string name="already_in_right_format">The book is already in that format</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
 </resources>

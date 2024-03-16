@@ -19,10 +19,12 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.aloussase.booksdownloader.R
 import io.github.aloussase.booksdownloader.databinding.ActivityMainBinding
+import io.github.aloussase.booksdownloader.domain.repository.SettingsRepository
 import io.github.aloussase.booksdownloader.receivers.DownloadManagerReceiver
 import io.github.aloussase.booksdownloader.services.BookSearchService
 import io.github.aloussase.booksdownloader.viewmodels.SnackbarViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -32,6 +34,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private val snackbarViewModel by viewModels<SnackbarViewModel>()
+
+    @Inject
+    lateinit var settings: SettingsRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +62,10 @@ class MainActivity : AppCompatActivity() {
                 val message = getString(R.string.download_completed, it.bookTitle)
                 snackbarViewModel.showSnackbar(message)
             }
+        }
+
+        lifecycleScope.launch {
+            settings.setDefaults()
         }
     }
 

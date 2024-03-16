@@ -61,4 +61,6 @@
     <string name="empty_contents">El archivo esta vacío</string>
     <string name="empty_filename">El nombre del archivo no es válido</string>
     <string name="already_in_right_format">El libro ya se encuentra en ese formato</string>
+    <string name="settings">Configuración</string>
+    <string name="language">Lenguaje</string>
 </resources>
