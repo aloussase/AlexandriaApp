@@ -35,7 +35,7 @@
     <string name="logo">logo</string>
     <string name="about">Acerca</string>
     <string name="mas">Más</string>
-    <string name="version">Version 0.2.0</string>
+    <string name="version">Version 0.3.0</string>
     <string name="download_completed">Descarga completada: %s</string>
     <string name="starting_download">Iniciando descarga de: %s</string>
     <string name="conversion_complete">Conversión completada.</string>
