@@ -3,12 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="24dp">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="2dp"
+        android:src="@drawable/logo_no_bg"
+        android:contentDescription="@string/logo" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_marginBottom="24dp"
+        android:layout_marginTop="24dp"
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -29,6 +42,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_marginBottom="24dp"
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -48,6 +62,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -73,6 +88,7 @@
         android:textColor="@color/light_gray"
         android:textSize="14sp"
         android:layout_marginBottom="24dp"
+        android:layout_gravity="center_horizontal"
         tools:text="Cargado: The way of kings.pdf" />
 
 
