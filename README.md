@@ -21,6 +21,10 @@
 
 Alexandria is an open source application for downloading and converting EBooks.
 
+**NOTE** Currently Alexandria costs me around $3 monthly, and even if it may not be a huge amount, here in
+Ecuador it is a considerable amount, plus I'm a college student and don't actually have a salary. That is why
+I would very much appreciate any donations you could make, every cent helps. Thank you!
+
 **Features**
 
 - Search for your favorite titles and download them
