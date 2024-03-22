@@ -41,7 +41,7 @@
     <string name="limit_reached">Du kannst nur 2 Bücher pro Minute umwandeln</string>
     <string name="notification_rationale">Die Anwendung benötigt Benachrichtigungsberechtigungen um den Status für das Herunterladen und das Umwandeln anzuzeigen</string>
     <string name="ok">OK</string>
-    <string name="cancel">Abbrechen</string></string></string>
+    <string name="cancel">Abbrechen</string>
     <string name="download_book_rationale">Es werden Berechtigungen zum Herunterladen von Büchern benötigt</string>
     <string name="search_service_title">Suche %s</string>
     <string name="search_service_content">Es wird gesucht</string>
