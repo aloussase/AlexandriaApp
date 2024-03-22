@@ -17,7 +17,8 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
     enum class Language {
         SPANISH,
-        ENGLISH
+        ENGLISH,
+        GERMAN,
     }
 
     sealed class Event {
@@ -37,6 +38,7 @@ class SettingsViewModel @Inject constructor(
             val language = when (locale) {
                 "es" -> Language.SPANISH
                 "en" -> Language.ENGLISH
+                "de" -> Language.GERMAN
                 else -> throw IllegalArgumentException("Invalid locale: $locale")
             }
 
@@ -54,6 +56,7 @@ class SettingsViewModel @Inject constructor(
         val lang = when (language) {
             Language.SPANISH -> "es"
             Language.ENGLISH -> "en"
+            Language.GERMAN -> "de"
         }
 
         val locale = LocaleListCompat.forLanguageTags(lang)
