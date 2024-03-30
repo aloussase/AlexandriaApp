@@ -57,4 +57,5 @@
     <string name="already_in_right_format">Das Buch ist bereits in diesem Format</string>
     <string name="settings">Einstellungen</string>
     <string name="language">Sprache</string>
+    <string name="fallback_language_not_found">Language code: %s not found. Falling back to English as default language.</string>
 </resources>

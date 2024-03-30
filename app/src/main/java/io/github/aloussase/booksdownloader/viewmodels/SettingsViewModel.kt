@@ -35,11 +35,14 @@ class SettingsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val locale = settings.getSavedLocaled()
-            val language = when (locale) {
-                "es" -> Language.SPANISH
-                "en" -> Language.ENGLISH
-                "de" -> Language.GERMAN
-                else -> throw IllegalArgumentException("Invalid locale: $locale")
+            val language = when {
+                locale.startsWith("es") -> Language.SPANISH
+                locale.startsWith("en") -> Language.ENGLISH
+                locale.startsWith("de") -> Language.GERMAN
+                else -> {
+                    snackBarViewModel.showSnackbar(getString(R.string.fallback_language_not_found), locale)
+                    Language.ENGLISH
+                }
             }
 
             onLanguageSelected(language)
