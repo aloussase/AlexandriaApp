@@ -20,7 +20,7 @@ class AboutFragment : BaseApplicationFragment(R.layout.fragment_about) {
 
         val binding = FragmentAboutBinding.inflate(inflater, container, false)
 
-        binding.ibGithub.setOnClickListener { goToUrl("https://github.com/aloussase/alexandria-app") }
+        binding.ibGithub.setOnClickListener { goToUrl("https://github.com/aloussase/AlexandriaApp") }
         binding.ibLinkedin.setOnClickListener { goToUrl("https://www.linkedin.com/in/alexander-goussas/") }
         binding.ibKofi.setOnClickListener { goToUrl("https://ko-fi.com/aloussase") }
 
