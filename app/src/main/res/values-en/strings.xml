@@ -29,7 +29,7 @@
     <string name="logo">logo</string>
     <string name="about">About</string>
     <string name="mas">More</string>
-    <string name="version">Version 0.3.2</string>
+    <string name="version">Version 0.3.3</string>
     <string name="download_completed">Download finished: %s</string>
     <string name="starting_download">Starting download of: %s</string>
     <string name="conversion_complete">Conversion completed.</string>
