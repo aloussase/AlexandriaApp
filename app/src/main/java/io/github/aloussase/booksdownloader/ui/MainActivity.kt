@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -18,6 +19,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.aloussase.booksdownloader.R
+import io.github.aloussase.booksdownloader.behaviors.BottomNavigationViewBehavior
 import io.github.aloussase.booksdownloader.databinding.ActivityMainBinding
 import io.github.aloussase.booksdownloader.domain.repository.SettingsRepository
 import io.github.aloussase.booksdownloader.receivers.DownloadManagerReceiver
@@ -54,6 +56,10 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         NavigationUI.setupWithNavController(binding.navigation, navController)
+
+        // Make the bottom navigation hide on scrolldown
+        val layoutParams = binding.navigation.layoutParams as CoordinatorLayout.LayoutParams
+        layoutParams.behavior = BottomNavigationViewBehavior()
 
         snackbarViewModel.isShowing.observe(this, ::showSnackbar)
 
