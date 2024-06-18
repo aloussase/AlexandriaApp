@@ -9,6 +9,8 @@
 
 Alexandria is an open source application for downloading and converting EBooks.
 
+Follow me on Twitter at [@aloussase](https://x.com/aloussase) for updates on this app's development!
+
 **Features**
 
 - Search for your favorite titles and download them
