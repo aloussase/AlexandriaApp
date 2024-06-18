@@ -39,7 +39,7 @@ class SettingsViewModel @Inject constructor(
                 "es" -> Language.SPANISH
                 "en" -> Language.ENGLISH
                 "de" -> Language.GERMAN
-                else -> throw IllegalArgumentException("Invalid locale: $locale")
+                else -> return@launch
             }
 
             onLanguageSelected(language)
